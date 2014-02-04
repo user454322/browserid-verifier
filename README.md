@@ -1,0 +1,2 @@
+browserid-verifier
+==================
