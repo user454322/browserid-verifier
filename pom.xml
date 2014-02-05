@@ -6,7 +6,8 @@
   <artifactId>browserid-verifier</artifactId>
   <packaging>jar</packaging>
   <version>0.1-SNAPSHOT</version>
-  <name>browserid-verifier</name>
+  
+  <name>BrowserID Verifier</name>
   <url>https://github.com/user454322/browserid-verifier</url>
 
   <dependencies>
