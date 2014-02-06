@@ -1,23 +1,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>info.modprobe</groupId>
-  <artifactId>browserid-verifier</artifactId>
-  <packaging>jar</packaging>
-  <version>0.1-SNAPSHOT</version>
-  
-  <name>BrowserID Verifier</name>
-  <url>https://github.com/user454322/browserid-verifier</url>
+	<groupId>info.modprobe</groupId>
+	<artifactId>browserid-verifier</artifactId>
+	<packaging>jar</packaging>
+	<version>0.1-SNAPSHOT</version>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+	<name>BrowserID Verifier</name>
+	<url>https://github.com/user454322/browserid-verifier</url>
 
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
 </project>
