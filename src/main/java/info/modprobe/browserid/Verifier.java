@@ -50,8 +50,10 @@ public class Verifier {
 	 * @param audience
 	 * @return the result of the verification
 	 * 
-	 * @throws <code>BrowserIDResponse</code> if there is a failure in the
+	 * @throws {@code BrowserIDResponse} if there is a failure in the
 	 *         verification process
+	 * @throws {@code IllegalArgumentException} if assertion or audience are not
+	 *         provided
 	 */
 	public BrowserIDResponse verify(final String assertion,
 			final String audience) {
@@ -103,5 +105,5 @@ public class Verifier {
 			throw new BrowserIDException(exc);
 		}
 	}
-	
+
 }
