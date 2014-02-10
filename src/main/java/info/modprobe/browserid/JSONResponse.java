@@ -1,17 +1,29 @@
 package info.modprobe.browserid;
 
+import info.modprobe.browserid.BrowserIDResponse.Status;
+
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
+
 /**
  * Class to handle JSON responses from the issuer.
  * 
  * Although there are plenty of JSON libraries, is desired to keep the external
  * dependencies to the minimum possible, and since the response is very simple
  * it is feasible to parse the response here instead of using a JSON library.
- * 
+ * But for the time being minimal-json is used.
  * 
  */
 class JSONResponse {
 
+	private final String audience;
+	private final String email;
+	private final long expires;
+	private final String issuer;
+	private final JsonObject jsonObject;
+	private final String reason;
 	private final String response;
+	private final String status;
 
 	/**
 	 * 
@@ -22,57 +34,64 @@ class JSONResponse {
 	 */
 	JSONResponse(final String response) {
 		this.response = response;
-		boolean errorInParsingResponse = false;
-		if (errorInParsingResponse) {
-			throw new BrowserIDException("Unable to parse: " + response);
+
+		try {
+			jsonObject = JsonObject.readFrom(response);
+		} catch (RuntimeException exc) {
+			throw new BrowserIDException(exc);
 		}
+
+		if ((status = getStringFromJSON("status")) == null) {
+			throw new BrowserIDException("The response doesn't contain status");
+		}
+		if (!Status.OK.toString().equals(status)
+				|| !Status.FAILURE.toString().equals(status)) {
+			String message = String.format("Invalid status '%s' ", status);
+			throw new BrowserIDException(message);
+		}
+		
+		audience = getStringFromJSON("audience");
+		email = getStringFromJSON("email");
+		try {
+			expires = jsonObject.get("expires") == null ? 0 : jsonObject.get(
+					"expires").asLong();
+		} catch (RuntimeException exc) {
+			throw new BrowserIDException(exc);
+		}
+		issuer = getStringFromJSON("issuer");
+		reason = getStringFromJSON("reason");
+
 	}
 
 	String getAudience() {
-		return null;
+		return audience;
 	}
 
 	String getEmail() {
-		return null;
+		return email;
 	}
 
 	long getExpires() {
-		return 0;
+		return expires;
 	}
 
 	String getIssuer() {
-		return null;
+		return issuer;
 	}
 
 	String getReason() {
-		return null;
+		return reason;
 	}
 
 	String getStatus() {
-		return null;
+		return status;
 	}
 
-	private String extractAudience() {
-		return null;
-	}
-
-	private String extractEmail() {
-		return null;
-	}
-
-	private long extractExpires() {
-		return 0;
-	}
-
-	private String extractIssuer() {
-		return null;
-	}
-
-	private String extractReason() {
-		return null;
-	}
-
-	private String extractStatus() {
+	private String getStringFromJSON(final String str) {
+		JsonValue jsonVal = jsonObject.get(str);
+		if (jsonVal != null) {
+			return jsonVal.asString();
+		}
 		return null;
 	}
 
@@ -81,3 +100,10 @@ class JSONResponse {
 		return response;
 	}
 }
+/*
+ * {"status":"failure","reason":"assertion has expired"}
+ * 
+ * 
+ * {"audience":"localhost","expires":1391698500490,"issuer":"login.persona.org",
+ * "email":"javucho1000@yahoo.com.mx","status":"okay"}
+ */

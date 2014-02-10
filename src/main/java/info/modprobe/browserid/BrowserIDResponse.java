@@ -15,22 +15,28 @@ import org.slf4j.LoggerFactory;
  * {@link #getStatus()} method will always be available, other fields'
  * availability depend on its value.
  * 
- * <br/> <br/>
- * The majority of the code on this class has been borrowed from <a href=
- * "https://github.com/mozilla/browserid-cookbook/blob/109ff3f1446ce3f28bdb09bf500749a6fa4cca55/java/spring/src/pt/webdetails/browserid/BrowserIdResponse.java"
- * > Mozilla's browser-id cook book BrowserIdResponse</a> class
+ * 
+ * @see <a
+ *      href="https://developer.mozilla.org/en/Persona/Remote_Verification_API"
+ *      >Persona's <i>Remote Verification API</i> </a>
+ * 
+ * 
+ * <br/>
+ * <br/>
+ *      The majority of the code on this class has been borrowed from <a href=
+ *      "https://github.com/mozilla/browserid-cookbook/blob/109ff3f1446ce3f28bdb09bf500749a6fa4cca55/java/spring/src/pt/webdetails/browserid/BrowserIdResponse.java"
+ *      > Mozilla's browser-id cook book BrowserIdResponse</a> class
  */
 public class BrowserIDResponse {
 
-	private Status status;
-	private String email;
-	private String audience;
-	private long expires;
-	private String issuer;
-	private String reason;
-
+	private final String audience;
+	private final String email;
+	private final long expires;
+	private final String issuer;
 	private JSONResponse jsonResponse;
-	
+	private final String reason;
+	private final Status status;
+
 	private static final Logger log = LoggerFactory
 			.getLogger(BrowserIDResponse.class);
 
@@ -61,9 +67,13 @@ public class BrowserIDResponse {
 
 	/**
 	 * 
-	 * @return expiration date for the assertion
+	 * @return Expiration date for the assertion. {@code null} if the response
+	 *         doesn't contain this field
 	 */
 	public Date getExpires() {
+		if (expires == 0) {
+			return null;
+		}
 		return new Date(expires);
 	}
 
@@ -87,8 +97,9 @@ public class BrowserIDResponse {
 	 * 
 	 * @param response
 	 *            result of a call to a BrowserID verify service
-	 * @throws JSONException
-	 *             if the response cannot be parsed as JSON markup.
+	 * @throws BrowserIDException
+	 *             if the response cannot be parsed or the <i>status</i> is
+	 *             invalid, i.e., not "okay" nor "failure"
 	 */
 	public BrowserIDResponse(String response) {
 		try {
@@ -98,19 +109,26 @@ public class BrowserIDResponse {
 
 			switch (status) {
 			case OK:
+				audience = jsonResponse.getAudience();
 				email = jsonResponse.getEmail();
-				audience = jsonResponse.getEmail();
 				expires = jsonResponse.getExpires();
 				issuer = jsonResponse.getIssuer();
+				reason = null;
 				break;
 
 			case FAILURE:
+				audience = null;
+				email = null;
+				expires = 0;
+				issuer = null;
 				reason = jsonResponse.getReason();
-
 				break;
+
+			default:
+				throw new BrowserIDException(new IllegalArgumentException(
+						"Invalid response status"));
 			}
 
-			
 		} catch (BrowserIDException exc) {
 			log.error(exc.toString(), exc);
 			throw new BrowserIDException(exc);
