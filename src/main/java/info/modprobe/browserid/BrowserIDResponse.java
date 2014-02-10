@@ -7,9 +7,6 @@ package info.modprobe.browserid;
 
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A response from a BrowserID verification service. The status via
  * {@link #getStatus()} method will always be available, other fields'
@@ -35,10 +32,7 @@ public class BrowserIDResponse {
 	private final String issuer;
 	private JSONResponse jsonResponse;
 	private final String reason;
-	private final Status status;
-
-	private static final Logger log = LoggerFactory
-			.getLogger(BrowserIDResponse.class);
+	private final Status status;	
 
 	/**
 	 * 
@@ -125,12 +119,12 @@ public class BrowserIDResponse {
 				break;
 
 			default:
+				/* This shouldn't happen, just make java happy */
 				throw new BrowserIDException(new IllegalArgumentException(
 						"Invalid response status"));
 			}
 
-		} catch (BrowserIDException exc) {
-			log.error(exc.toString(), exc);
+		} catch (BrowserIDException exc) {			
 			throw new BrowserIDException(exc);
 		}
 	}

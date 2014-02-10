@@ -45,18 +45,18 @@ class JSONResponse {
 			throw new BrowserIDException("The response doesn't contain status");
 		}
 		if (!Status.OK.toString().equals(status)
-				|| !Status.FAILURE.toString().equals(status)) {
+				&& !Status.FAILURE.toString().equals(status)) {
 			String message = String.format("Invalid status '%s' ", status);
 			throw new BrowserIDException(message);
 		}
-		
+
 		audience = getStringFromJSON("audience");
 		email = getStringFromJSON("email");
 		try {
 			expires = jsonObject.get("expires") == null ? 0 : jsonObject.get(
 					"expires").asLong();
 		} catch (RuntimeException exc) {
-			throw new BrowserIDException(exc);
+			throw new BrowserIDException("Couldn't get expires' value");
 		}
 		issuer = getStringFromJSON("issuer");
 		reason = getStringFromJSON("reason");
@@ -88,9 +88,14 @@ class JSONResponse {
 	}
 
 	private String getStringFromJSON(final String str) {
-		JsonValue jsonVal = jsonObject.get(str);
-		if (jsonVal != null) {
-			return jsonVal.asString();
+		try {
+			JsonValue jsonVal = jsonObject.get(str);
+			if (jsonVal != null) {
+				return jsonVal.asString();
+			}
+		} catch (RuntimeException exc) {
+			throw new BrowserIDException(String.format(
+					"Couldn't get string value for '%s'", str));
 		}
 		return null;
 	}
@@ -100,10 +105,3 @@ class JSONResponse {
 		return response;
 	}
 }
-/*
- * {"status":"failure","reason":"assertion has expired"}
- * 
- * 
- * {"audience":"localhost","expires":1391698500490,"issuer":"login.persona.org",
- * "email":"javucho1000@yahoo.com.mx","status":"okay"}
- */
