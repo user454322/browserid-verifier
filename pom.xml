@@ -4,11 +4,32 @@
 
 	<groupId>info.modprobe</groupId>
 	<artifactId>browserid-verifier</artifactId>
-	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
 
+	<packaging>jar</packaging>
 	<name>BrowserID Verifier</name>
+	<description>Simple Java BrowserID Verifier</description>
 	<url>https://github.com/user454322/browserid-verifier</url>
+
+	<licenses>
+		<license>
+			<name>Mozilla Public License, Version 2.0</name>
+			<url>http://www.mozilla.org/MPL/2.0/</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/user454322/browserid-verifier</url>
+		<connection>scm:git:git@github.com:user454322/browserid-verifier.git</connection>
+		<developerConnection>scm:git:git@github.com:user454322/browserid-verifier.git</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<id>user454322</id>
+			<name>Javier</name>
+			<email>javier@modprobe.info</email>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<dependency>
@@ -46,6 +67,30 @@
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<effort>Max</effort>
+					<threshold>Low</threshold>
+					<xmlOutput>true</xmlOutput>
+					<findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

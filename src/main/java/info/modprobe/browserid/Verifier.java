@@ -8,6 +8,7 @@ package info.modprobe.browserid;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -42,7 +43,7 @@ public class Verifier {
 	}
 
 	public String getURL() {
-		return new String(url);
+		return url;
 	}
 
 	/***
@@ -88,7 +89,8 @@ public class Verifier {
 			}
 
 			/* Read from the connection */
-			try (Scanner scanner = new Scanner(connection.getInputStream())) {
+			try (Scanner scanner = new Scanner(connection.getInputStream(),
+					StandardCharsets.UTF_8.toString())) {
 				response = scanner.useDelimiter("\\A").hasNext() ? scanner
 						.next() : "";
 			} catch (IOException rdExc) {
