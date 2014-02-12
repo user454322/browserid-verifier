@@ -14,10 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @WebServlet(value = "/in")
 public class In extends HttpServlet {
 
 	private static final long serialVersionUID = -452837824924983487L;
+	private static final Logger log = LoggerFactory.getLogger(In.class);
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -32,16 +36,16 @@ public class In extends HttpServlet {
 		BrowserIDResponse personaResponse = verifier
 				.verify(assertion, audience);
 		Status status = personaResponse.getStatus();
-		if (status == Status.OK) {	
+		if (status == Status.OK) {
+			String email = personaResponse.getEmail();
+			log.info("{} has sucessfully signed in", email);
 			HttpSession session = req.getSession(true);
-			session.setAttribute("email", personaResponse.getEmail());
-			
-			System.out.print("Here");
+			session.setAttribute("email", email);
 			out.print("okay");
 
 		} else {
+			log.info("Failed...");
 			out.print("failure");
-			System.out.print("nnnn");
 		}
 
 		out.close();
