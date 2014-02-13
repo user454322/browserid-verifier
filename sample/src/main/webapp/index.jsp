@@ -7,12 +7,13 @@
 </head>
 
 <body>
-	<h2>
+	<h3>
 		Login using <a href="http://www.mozilla.org/en-US/persona">Mozilla
 			Persona</a> a Browser ID implementation
-	</h2>
+	</h3>
 
-	<br> *${sessionScope.email}*
+	Welcome: ${sessionScope.email}
+	<br>
 	<c:choose>
 		<c:when test="${empty sessionScope.email}">
 			<input type="image" src="persona-only-signin-link.png" name="image"
@@ -25,7 +26,7 @@
 			</h3>
 		</c:when>
 		<c:otherwise>
-        	Logout
+        	<button type="button" onclick="navigator.id.logout();">Sign out</button>        	
     	</c:otherwise>
 	</c:choose>
 
@@ -34,7 +35,7 @@
 	<script src="https://login.persona.org/include.js"></script>
 
 	<script type="text/javascript">
-		var currentUser = '';
+		var currentUser = '${sessionScope.email}';
 
 		navigator.id.watch({
 			loggedInUser : currentUser,

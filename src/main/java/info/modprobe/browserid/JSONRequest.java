@@ -18,7 +18,7 @@ class JSONRequest {
 	JSONRequest(final String assertion, final String audience) {
 		this.assertion = assertion;
 		this.audience = audience;
-		request = String.format(REQUEST_TEMPLATE, assertion, audience);
+		request = String.format(REQUEST_TEMPLATE, audience, assertion);
 	}
 
 	String getAssertion() {
