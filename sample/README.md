@@ -4,5 +4,5 @@ Sample project for [Java BrowserID Verifier](https://github.com/user454322/brows
 clone, then `mvn jetty:run`
 
 
-Alternatively see a live sample in CloudBees.
+Alternatively see a [live sample](http://browserid-verifier.user454322.cloudbees.net) in CloudBees.
 

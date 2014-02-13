@@ -13,7 +13,7 @@ The usage is something like this:
 BrowserIDResponse loginRepsonse = verifier.verify(assertion, AUDIENCE);
 ```
 
-Find a simple, yet complete sample *HERE* with its [source code](https://github.com/user454322/browserid-verifier/tree/master/sample).
+Find a simple, yet complete sample [here](http://browserid-verifier.user454322.cloudbees.net) with its [source code](https://github.com/user454322/browserid-verifier/tree/master/sample).
 
 ## Usage
 ### 1. Add it as a dependency
