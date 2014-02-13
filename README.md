@@ -50,7 +50,7 @@ Status status = loginRepsonse.getStatus();
 if (status == Status.OK) {
   HttpSession session = request.getSession(true);
   session.setAttribute("email", email);
-
+  //...
 }  else {
   log.info("Sign in failed...");
   //...
