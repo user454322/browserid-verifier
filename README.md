@@ -34,8 +34,10 @@ It is hosted in oss.sonatype.org repository, so it is necessary to add the repos
 	<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
    </repository>
 ```
-Eventually it is going to be in [Maven Central Repository](http://search.maven.org)
 [Example](https://github.com/user454322/browserid-verifier/blob/master/sample/pom.xml)
+
+<sub>Eventually it is going to be in [Maven Central Repository](http://search.maven.org).</sub>
+
 
 　　 
 
@@ -43,7 +45,7 @@ Eventually it is going to be in [Maven Central Repository](http://search.maven.o
 ### 2. Use
 In the server side:
 ```java
-BrowserIDResponse loginRepsonse = verifier.verify(assertion, AUDIENCE);
+BrowserIDResponse loginRepsonse = verifier.verify(assertion, audience);
 Status status = loginRepsonse.getStatus();
 if (status == Status.OK) {
   HttpSession session = request.getSession(true);
@@ -61,7 +63,7 @@ if (status == Status.OK) {
 
 In the client side:
 ```javascript
-<button type="button" onclick="navigator.id.request();" >Sign in / Sign up</button>
+<button type="button" onclick="navigator.id.request();" >Sign in - Sign up</button>
 <button type="button" onclick="navigator.id.logout();" >Sign out</button>
 ....
 	<script src="https://login.persona.org/include.js"></script>
