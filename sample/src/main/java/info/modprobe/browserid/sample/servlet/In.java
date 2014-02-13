@@ -20,34 +20,33 @@ import org.slf4j.LoggerFactory;
 @WebServlet(value = "/in")
 public class In extends HttpServlet {
 
-	private static final long serialVersionUID = -452837824924983487L;
+	private static final long serialVersionUID = -452837824924983488L;
 	private static final Logger log = LoggerFactory.getLogger(In.class);
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
 
-		resp.setContentType("text/html");
-		PrintWriter out = resp.getWriter();
-
-		final Verifier verifier = new Verifier();
 		final String audience = req.getServerName();
 		final String assertion = req.getParameter("assertion");
-		BrowserIDResponse personaResponse = verifier
-				.verify(assertion, audience);
-		Status status = personaResponse.getStatus();
+		final Verifier verifier = new Verifier();
+		final BrowserIDResponse personaResponse = verifier.verify(assertion,
+				audience);
+		final Status status = personaResponse.getStatus();
+
 		if (status == Status.OK) {
+			/* Authentication with Persona was successful */
 			String email = personaResponse.getEmail();
 			log.info("{} has sucessfully signed in", email);
 			HttpSession session = req.getSession(true);
 			session.setAttribute("email", email);
-			out.print("okay");
 
 		} else {
-			log.info("Failed...");
-			out.print("failure");
+			/* Authentication with Persona failed */
+			log.info("Sign in failed...");
+
 		}
 
-		out.close();
 	}
 }

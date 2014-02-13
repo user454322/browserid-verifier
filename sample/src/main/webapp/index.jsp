@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <title>Sample</title>
@@ -11,26 +12,29 @@
 			Persona</a> a Browser ID implementation
 	</h2>
 
-	<br>
+	<br> *${sessionScope.email}*
+	<c:choose>
+		<c:when test="${empty sessionScope.email}">
+			<input type="image" src="persona-only-signin-link.png" name="image"
+				onclick="navigator.id.request();">
 
 
-
-	<input type="image" src="persona-only-signin-link.png" name="image"
-		onclick="navigator.id.request();">
-
-
-	<h3>
-		<a href="https://github.com/user454322/browserid-verifier"> Simple
-			Java BrowserID Verifier </a>
-	</h3>
-
+			<h3>
+				<a href="https://github.com/user454322/browserid-verifier">
+					Simple Java BrowserID Verifier </a>
+			</h3>
+		</c:when>
+		<c:otherwise>
+        	Logout
+    	</c:otherwise>
+	</c:choose>
 
 
 
 	<script src="https://login.persona.org/include.js"></script>
 
 	<script type="text/javascript">
-		var currentUser = '#{account}';
+		var currentUser = '';
 
 		navigator.id.watch({
 			loggedInUser : currentUser,
@@ -46,7 +50,6 @@
 					}
 				});
 				loginRequest.done(function(res, status, xhr) {
-					alert("OK vvv");
 					window.location.reload();
 				});
 				loginRequest.fail(function(xhr, status, error) {
@@ -65,7 +68,6 @@
 					url : 'out' // This is a URL on your website.	      
 				});
 				logoutRequest.done(function(res, status, xhr) {
-					alert("Logout OK");
 					window.location.reload();
 				});
 				logoutRequest.fail(function(xhr, status, error) {

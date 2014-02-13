@@ -13,16 +13,12 @@ import java.util.Date;
  * availability depend on its value.
  * 
  * 
- * @see <a
- *      href="https://developer.mozilla.org/en/Persona/Remote_Verification_API"
- *      >Persona's <i>Remote Verification API</i> </a>
+ * @see <a href="https://developer.mozilla.org/en/Persona/Remote_Verification_API"> Persona's <i>Remote Verification API</i> </a>
  * 
  * 
  * <br/>
  * <br/>
- *      The majority of the code on this class has been borrowed from <a href=
- *      "https://github.com/mozilla/browserid-cookbook/blob/109ff3f1446ce3f28bdb09bf500749a6fa4cca55/java/spring/src/pt/webdetails/browserid/BrowserIdResponse.java"
- *      > Mozilla's browser-id cook book BrowserIdResponse</a> class
+ * The majority of the code on this class has been borrowed from <a href="https://github.com/mozilla/browserid-cookbook/blob/109ff3f1446ce3f28bdb09bf500749a6fa4cca55/java/spring/src/pt/webdetails/browserid/BrowserIdResponse.java">Mozilla's browser-id cook book BrowserIdResponse</a> class
  */
 public class BrowserIDResponse {
 

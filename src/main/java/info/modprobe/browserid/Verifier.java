@@ -20,9 +20,8 @@ import org.slf4j.LoggerFactory;
  * Simple client for a BrowserID verify call.
  * 
  * <br/>
- * The majority of the code on this class has been borrowed from <a href=
- * "https://github.com/mozilla/browserid-cookbook/blob/109ff3f1446ce3f28bdb09bf500749a6fa4cca55/java/spring/src/pt/webdetails/browserid/BrowserIdVerifier.java"
- * > Mozilla's browser-id cook book BrowserIdVerifier</a> class
+ * The majority of the code on this class has been borrowed from <a href="https://github.com/mozilla/browserid-cookbook/blob/109ff3f1446ce3f28bdb09bf500749a6fa4cca55/java/spring/src/pt/webdetails/browserid/BrowserIdVerifier.java">
+ * Mozilla's browser-id cook book BrowserIdVerifier</a> class
  */
 public class Verifier {
 

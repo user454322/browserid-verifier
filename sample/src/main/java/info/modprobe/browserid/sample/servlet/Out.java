@@ -11,12 +11,13 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(value = "/out")
 public class Out extends HttpServlet {
-	
-	private static final long serialVersionUID = -2559085906064523566L;
+
+	private static final long serialVersionUID = -2559085906064523567L;
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
 
 		final HttpSession session = req.getSession(false);
 		if (session != null) {

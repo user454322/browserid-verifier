@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>info.modprobe</groupId>
 			<artifactId>browserid-verifier</artifactId>
-			<version>0.1.0</version>
+			<version>0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -36,6 +36,12 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>runtime</scope>	
 		</dependency>
 	</dependencies>
 
@@ -57,4 +63,13 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>browserid-snapshots</id>
+			<name>browserid-snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+
 </project>
