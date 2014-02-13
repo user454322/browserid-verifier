@@ -1,4 +1,4 @@
-Sample project for [Java BrowserID Verifier](https://github.com/user454322/browserid-verifier)
+Sample project for [Java BrowserID Verifier](https://github.com/user454322/browserid-verifier).
 
 
 clone, then `mvn jetty:run`
