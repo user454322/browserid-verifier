@@ -44,7 +44,7 @@ public class In extends HttpServlet {
 
 		} else {
 			/* Authentication with Persona failed */
-			log.info("Sign in failed...");
+			log.info("Sign in failed: {}", personaResponse.getReason());
 
 		}
 

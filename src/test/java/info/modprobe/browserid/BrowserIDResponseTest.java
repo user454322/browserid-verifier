@@ -20,20 +20,20 @@ public class BrowserIDResponseTest {
 
 	@Rule
 	public final ExpectedException expectedException = ExpectedException.none();
-	private static final String INVALID_STATUS = "okayy";
+	private static final String INVALID_STATUS = "xcss";
 
 	private static final String INVALID_JSON_RESPONSE = "\"status\":\"failure\",\"reason\":\"assertion has expired\"";
 	private static final String FAILURE_RESPONSE = "{\"status\":\"failure\",\"reason\":\"assertion has expired\"}";
 	private static final String INVALID_STATUS_RESPONSE = String
 			.format("{\"audience\":\"example.com\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"%s\"}",
 					INVALID_STATUS);
+	private static final String MIXED_RESPONSE = "{\"audience\":\"example.com\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"failure\",\"status\":\"okay\"}";
 	private static final String NO_STATUS_RESPONSE = "{\"audience\":\"example.com\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\"}";
 	private static final String NO_EXPIRES_RESPONSE = "{\"audience\":\"example.com\",\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
 	private static final String OKAY_RESPONSE = "{\"audience\":\"example.com\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
 	private static final String WRONG_AUDIENCE_TYPE_RESPONSE = "{\"audience\":true,\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
 	private static final String WRONG_EXPIRES_TYPE_RESPONSE = "{\"audience\":\"example.com\",\"expires\":\"1223334444150\",\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
 
-	
 	@Test
 	public void failureResponse() {
 		final BrowserIDResponse fail = new BrowserIDResponse(FAILURE_RESPONSE);
@@ -48,7 +48,7 @@ public class BrowserIDResponseTest {
 	@Test
 	public void invalidResponse() {
 		expectedException.expect(BrowserIDException.class);
-		new BrowserIDResponse(INVALID_JSON_RESPONSE);		
+		new BrowserIDResponse(INVALID_JSON_RESPONSE);
 	}
 
 	@Test
@@ -65,6 +65,21 @@ public class BrowserIDResponseTest {
 	public void noStatusResponse() {
 		expectedException.expect(BrowserIDException.class);
 		new BrowserIDResponse(NO_STATUS_RESPONSE);
+	}
+
+	@Test
+	public void mixedResponse() {
+		/*
+		 * TODO: shall we check against a JSON schema http://json-schema.org or
+		 * something similar?
+		 * 
+		 * We don't want anything similar to
+		 * "On Breaking SAML: Be Whoever You Want to Be |USENIX"
+		 */
+		expectedException.expect(BrowserIDException.class);
+		expectedException.expectMessage(String.format("Invalid response '%s'",
+				INVALID_STATUS));
+		new BrowserIDResponse(MIXED_RESPONSE);
 	}
 
 	@Test
@@ -93,14 +108,15 @@ public class BrowserIDResponseTest {
 	@Test
 	public void wrongAudienceTypeResponse() {
 		expectedException.expect(BrowserIDException.class);
-		expectedException.expectMessage("Couldn't get string value for 'audience'");
+		expectedException
+				.expectMessage("Couldn't get string value for 'audience'");
 		new BrowserIDResponse(WRONG_AUDIENCE_TYPE_RESPONSE);
 	}
 
 	@Test
 	public void wrongExpireTypeResponse() {
 		expectedException.expect(BrowserIDException.class);
-		expectedException.expectMessage("Couldn't get expires' value");		
+		expectedException.expectMessage("Couldn't get expires' value");
 		new BrowserIDResponse(WRONG_EXPIRES_TYPE_RESPONSE);
 	}
 

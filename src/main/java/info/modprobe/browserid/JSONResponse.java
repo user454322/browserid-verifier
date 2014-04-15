@@ -14,6 +14,7 @@ import com.eclipsesource.json.JsonValue;
  * But for the time being minimal-json is used.
  * 
  */
+//TODO: Localize exceptions
 class JSONResponse {
 
 	private final String audience;
