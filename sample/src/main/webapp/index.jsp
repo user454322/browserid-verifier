@@ -31,38 +31,36 @@
 		<c:choose>
 			<c:when test="${empty sessionScope.email}">
 				<input type="image" src="persona-only-signin-link.png" name="image"
-					onclick="navigator.id.request();">
-	
-	
-	            <br />
-	            <br />  
-				<h3>
-					<a href="https://github.com/user454322/browserid-verifier">
-						Simple Java BrowserID Verifier </a>
-				</h3>
+					onclick="navigator.id.request();">       
 			</c:when>
 			<c:otherwise>
 	        	<button type="button" onclick="navigator.id.logout();">Sign out</button>        	
 	    	</c:otherwise>
 		</c:choose>
-	
+			 	
+	    <br />  
+		<h3>
+			<a href="https://github.com/user454322/browserid-verifier">
+				Simple Java BrowserID Verifier 
+			</a>
+		</h3>
 	
 	
 		<script src="https://login.persona.org/include.js"></script>
 	
 		<script type="text/javascript">
 			var currentUser = '${sessionScope.email}';
+			if(!currentUser){
+				/* If falsy set it to the literal null */
+				currentUser = null;
+			}
 	
 			navigator.id.watch({
 				loggedInUser : currentUser,
 				onlogin : function(assertion) {
-					// A user has logged in! Here you need to:
-					// 1. Send the assertion to your backend for verification and 
-					//		to create a session.
-					// 2. Update your UI.
 					loginRequest = $.ajax({
 						type : 'POST',
-						url : 'in', // This is a URL on your website.
+						url : 'in',
 						data : {
 							assertion : assertion
 						}
@@ -77,16 +75,9 @@
 				},
 	
 				onlogout : function() {
-					// A user has logged out! Here you need to:
-					// Tear down the user's session by redirecting the user or 
-					//		making a call to your backend.
-					// Also, make sure loggedInUser will get set to null on the 
-					//		next page load.
-					// (That's a literal JavaScript null. 
-					//		Not false, 0, or undefined. null.)
 					logoutRequest = $.ajax({
 						type : 'POST',
-						url : 'out' // This is a URL on your website.	      
+						url : 'out'	      
 					});
 					logoutRequest.done(function(res, status, xhr) {
 						window.location.reload();
