@@ -2,8 +2,7 @@
 
 
 
-BrowserID Verifier is a simple verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md).
-However, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
+BrowserID Verifier is a simple verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md) but, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
 
 The only external dependencies are SLF4J and minimal-json. 
 Since minimal-json is only used to parse the response, it might become unnecessary in the future.
