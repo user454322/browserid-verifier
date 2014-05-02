@@ -2,7 +2,8 @@
 
 
 
-BrowserID Verifier is a simple verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md) however, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
+BrowserID Verifier is a simple verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md).
+However, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
 
 The only external dependencies are SLF4J and minimal-json. 
 Since minimal-json is only used to parse the response, it might become unnecessary in the future.
@@ -13,7 +14,7 @@ The usage is something like this:
 BrowserIDResponse loginRepsonse = verifier.verify(assertion, AUDIENCE);
 ```
 
-Find a simple, yet complete sample [here](http://browserid-verifier.user454322.cloudbees.net) with its [source code](https://github.com/user454322/browserid-verifier/tree/master/sample).
+Find a simple, yet complete [live sample here](http://browserid-verifier.user454322.cloudbees.net) with its [source code](https://github.com/user454322/browserid-verifier/tree/master/sample).
 
 ## Usage
 ### 1. Add it as a dependency
@@ -29,9 +30,9 @@ Find a simple, yet complete sample [here](http://browserid-verifier.user454322.c
 It is hosted in oss.sonatype.org repository, so it is necessary to add the repository:
 ```xml
    <repository>
-        <id>browserid-snapshots</id>
-	<name>browserid-snapshots</name>
-	<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+     <id>browserid-snapshots</id>
+     <name>browserid-snapshots</name>
+     <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
    </repository>
 ```
 [Example](https://github.com/user454322/browserid-verifier/blob/master/sample/pom.xml)
@@ -70,16 +71,17 @@ In the client side:
 
 	<script type="text/javascript">
 		var currentUser = '${sessionScope.email}';
+		if(!currentUser){
+			/* If falsy set it to the literal null */
+			currentUser = null;
+		}
 
 		navigator.id.watch({
 			loggedInUser : currentUser,
-			onlogin : function(assertion) {
-				// A user has logged in! Here you need to:
-				// 1. Send the assertion to your backend for verification and to create a session.
-				// 2. Update your UI.
+			onlogin : function(assertion) {				
 				loginRequest = $.ajax({
 					type : 'POST',
-					url : 'in', // This is a URL on your website.
+					url : 'in',
 					data : {
 						assertion : assertion
 					}
@@ -94,13 +96,9 @@ In the client side:
 			},
 
 			onlogout : function() {
-				// A user has logged out! Here you need to:
-				// Tear down the user's session by redirecting the user or making a call to your backend.
-				// Also, make sure loggedInUser will get set to null on the next page load.
-				// (That's a literal JavaScript null. Not false, 0, or undefined. null.)
 				logoutRequest = $.ajax({
 					type : 'POST',
-					url : 'out' // This is a URL on your website.	      
+					url : 'out'
 				});
 				logoutRequest.done(function(res, status, xhr) {
 					window.location.reload();
