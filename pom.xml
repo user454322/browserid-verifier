@@ -38,21 +38,16 @@
 			<version>1.7.5</version>
 		</dependency>
 		<dependency>
-			<groupId>com.eclipsesource.minimal-json</groupId>
-			<artifactId>minimal-json</artifactId>
-			<version>0.9.1</version>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
 		</dependency>
+	
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20090211</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -123,11 +118,11 @@
 			</build>
 		</profile>
 	</profiles>
-	
+
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
 	</parent>
-	
+
 </project>

@@ -1,9 +1,9 @@
 package info.modprobe.browserid;
 
-import info.modprobe.browserid.BrowserIDResponse.Status;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
+import info.modprobe.browserid.BrowserIDResponse.Status;
 
 /**
  * Class to handle JSON responses from the issuer.
@@ -14,14 +14,14 @@ import com.eclipsesource.json.JsonValue;
  * But for the time being minimal-json is used.
  * 
  */
-//TODO: Localize exceptions
+// TODO: Localize exceptions
 class JSONResponse {
 
 	private final String audience;
 	private final String email;
 	private final long expires;
 	private final String issuer;
-	private final JsonObject jsonObject;
+	private final JSONObject jsonObject;
 	private final String reason;
 	private final String response;
 	private final String status;
@@ -37,9 +37,9 @@ class JSONResponse {
 		this.response = response;
 
 		try {
-			jsonObject = JsonObject.readFrom(response);
-		} catch (RuntimeException exc) {
-			throw new BrowserIDException(exc);
+			jsonObject = new JSONObject(response);
+		} catch (JSONException exc) {
+			throw new BrowserIDException("Invalid JSON",exc);
 		}
 
 		if ((status = getStringFromJSON("status")) == null) {
@@ -53,15 +53,11 @@ class JSONResponse {
 
 		audience = getStringFromJSON("audience");
 		email = getStringFromJSON("email");
-		try {
-			expires = jsonObject.get("expires") == null ? 0 : jsonObject.get(
-					"expires").asLong();
-		} catch (RuntimeException exc) {
-			throw new BrowserIDException("Couldn't get expires' value");
-		}
+		expires = jsonObject.get("expires") == null ? 0 : (long) jsonObject
+				.get("expires");
+
 		issuer = getStringFromJSON("issuer");
 		reason = getStringFromJSON("reason");
-
 	}
 
 	String getAudience() {
@@ -90,10 +86,11 @@ class JSONResponse {
 
 	private String getStringFromJSON(final String str) {
 		try {
-			JsonValue jsonVal = jsonObject.get(str);
-			if (jsonVal != null) {
-				return jsonVal.asString();
+			Object jsonStr = jsonObject.get(str);
+			if (jsonStr != null) {
+				return (String) jsonStr;
 			}
+
 		} catch (RuntimeException exc) {
 			throw new BrowserIDException(String.format(
 					"Couldn't get string value for '%s'", str));

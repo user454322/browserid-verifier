@@ -120,7 +120,8 @@ public class BrowserIDResponse {
 						"Invalid response status"));
 			}
 
-		} catch (BrowserIDException exc) {			
+		} catch (BrowserIDException exc) {
+			//Wrap??
 			throw new BrowserIDException(exc);
 		}
 	}
