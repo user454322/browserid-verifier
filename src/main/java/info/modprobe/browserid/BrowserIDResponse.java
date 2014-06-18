@@ -5,6 +5,8 @@
 
 package info.modprobe.browserid;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 
 /**
@@ -13,12 +15,16 @@ import java.util.Date;
  * availability depend on its value.
  * 
  * 
- * @see <a href="https://developer.mozilla.org/en/Persona/Remote_Verification_API"> Persona's <i>Remote Verification API</i> </a>
+ * @see <a
+ *      href="https://developer.mozilla.org/en/Persona/Remote_Verification_API">
+ *      Persona's <i>Remote Verification API</i> </a>
  * 
  * 
  * <br/>
  * <br/>
- * The majority of the code on this class has been borrowed from <a href="https://github.com/mozilla/browserid-cookbook/blob/109ff3f1446ce3f28bdb09bf500749a6fa4cca55/java/spring/src/pt/webdetails/browserid/BrowserIdResponse.java">Mozilla's browser-id cook book BrowserIdResponse</a> class
+ *      The majority of the code on this class has been borrowed from <a href=
+ *      "https://github.com/mozilla/browserid-cookbook/blob/109ff3f1446ce3f28bdb09bf500749a6fa4cca55/java/spring/src/pt/webdetails/browserid/BrowserIdResponse.java"
+ *      >Mozilla's browser-id cook book BrowserIdResponse</a> class
  */
 public class BrowserIDResponse {
 
@@ -28,7 +34,7 @@ public class BrowserIDResponse {
 	private final String issuer;
 	private JSONResponse jsonResponse;
 	private final String reason;
-	private final Status status;	
+	private final Status status;
 
 	/**
 	 * 
@@ -91,7 +97,7 @@ public class BrowserIDResponse {
 	 *             if the response cannot be parsed or the <i>status</i> is
 	 *             invalid, i.e., not "okay" nor "failure"
 	 */
-	public BrowserIDResponse(String response) {
+	public BrowserIDResponse(final String response) {
 		try {
 
 			jsonResponse = new JSONResponse(response);
@@ -104,6 +110,15 @@ public class BrowserIDResponse {
 				expires = jsonResponse.getExpires();
 				issuer = jsonResponse.getIssuer();
 				reason = null;
+				try {
+					validateAudience();
+					validateEmail();
+
+				} catch (final MalformedURLException
+						| MalformedEmailAddressException illegalURLOrEmail) {
+					throw new BrowserIDException(new IllegalArgumentException(
+							illegalURLOrEmail));
+				}
 				break;
 
 			case FAILURE:
@@ -115,14 +130,13 @@ public class BrowserIDResponse {
 				break;
 
 			default:
-				/* This shouldn't happen, just make java happy */
 				throw new BrowserIDException(new IllegalArgumentException(
 						"Invalid response status"));
 			}
 
-		} catch (BrowserIDException exc) {
-			//Wrap??
-			throw new BrowserIDException(exc);
+		} catch (final BrowserIDException invalidStatusExc) {
+			throw invalidStatusExc;
+
 		}
 	}
 
@@ -159,6 +173,23 @@ public class BrowserIDResponse {
 
 	public String toString() {
 		return jsonResponse.toString();
+	}
+
+	/*
+	 * audience
+	 * The protocol, domain name, and port of your site. For example, 
+	 * "https://example.com:443".
+	 * See: https://developer.mozilla.org/en/Persona/Remote_Verification_API 
+	 */
+	public void validateAudience() throws MalformedURLException {
+		new URL(this.audience);
+	}
+
+	public void validateEmail() throws MalformedEmailAddressException {
+		if (this.email == null || !this.email.contains("@")) {
+			throw new MalformedEmailAddressException(String.format(
+					"Inalid email '%s'", this.email));
+		}
 	}
 
 }

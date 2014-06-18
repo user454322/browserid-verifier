@@ -12,7 +12,7 @@ import org.junit.rules.ExpectedException;
 
 public class BrowserIDResponseTest {
 
-	private static final String AUDIENCE = "example.com";
+	private static final String AUDIENCE = "https://example.com";
 	private static final String EMAIL = "bob@mail.com";
 	private static final long EXPIRES = 1223334444150L;
 	private static final String INVALID_STATUS = "invStatu";
@@ -22,14 +22,13 @@ public class BrowserIDResponseTest {
 	private static final String INVALID_JSON_RESPONSE = "\"status\":\"failure\",\"reason\":\"assertion has expired\"";
 	private static final String FAILURE_RESPONSE = "{\"status\":\"failure\",\"reason\":\"assertion has expired\"}";
 	private static final String INVALID_STATUS_RESPONSE = String
-			.format("{\"audience\":\"example.com\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"%s\"}",
-					INVALID_STATUS);
-	private static final String MIXED_RESPONSE = "{\"audience\":\"example.com\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"failure\",\"status\":\"okay\"}";
-	private static final String NO_STATUS_RESPONSE = "{\"audience\":\"example.com\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\"}";
-	private static final String NO_EXPIRES_RESPONSE = "{\"audience\":\"example.com\",\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
-	private static final String OKAY_RESPONSE = "{\"audience\":\"example.com\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
+			.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"%s\"}",
+					AUDIENCE, INVALID_STATUS);
+	private static final String MIXED_RESPONSE = String.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"failure\",\"status\":\"okay\"}", AUDIENCE);
+	private static final String NO_STATUS_RESPONSE = String.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\"}", AUDIENCE);
+	private static final String NO_EXPIRES_RESPONSE = String.format("{\"audience\":\"%s\",\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}", AUDIENCE);
+	private static final String OKAY_RESPONSE = String.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}", AUDIENCE);
 	private static final String WRONG_AUDIENCE_TYPE_RESPONSE = "{\"audience\":true,\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
-	private static final String WRONG_EXPIRES_TYPE_RESPONSE = "{\"audience\":\"example.com\",\"expires\":\"1223334444150\",\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
 
 	@Rule
 	public final ExpectedException expectedException = ExpectedException.none();	
@@ -73,7 +72,10 @@ public class BrowserIDResponseTest {
 		expectedException.expectMessage("Invalid JSON");
 		new BrowserIDResponse(MIXED_RESPONSE);
 	}
-
+	
+	
+		
+		
 	@Test
 	public void okayResponse() {
 		final BrowserIDResponse ok = new BrowserIDResponse(OKAY_RESPONSE);
@@ -99,17 +101,8 @@ public class BrowserIDResponseTest {
 
 	@Test
 	public void wrongAudienceTypeResponse() {
-		expectedException.expect(BrowserIDException.class);
-		expectedException
-				.expectMessage("Couldn't get string value for 'audience'");
+		expectedException.expect(BrowserIDException.class);		
 		new BrowserIDResponse(WRONG_AUDIENCE_TYPE_RESPONSE);
-	}
-
-	@Test
-	public void wrongExpireTypeResponse() {
-		expectedException.expect(BrowserIDException.class);
-		expectedException.expectMessage("Couldn't get expires' value");
-		new BrowserIDResponse(WRONG_EXPIRES_TYPE_RESPONSE);
 	}
 
 }

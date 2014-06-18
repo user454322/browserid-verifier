@@ -11,7 +11,8 @@ import info.modprobe.browserid.BrowserIDResponse.Status;
  * Although there are plenty of JSON libraries, is desired to keep the external
  * dependencies to the minimum possible, and since the response is very simple
  * it is feasible to parse the response here instead of using a JSON library.
- * But for the time being minimal-json is used.
+ * But for the time being we are using json.org. I want this library to be used
+ * only for good but, I can't restrict what other people do.
  * 
  */
 // TODO: Localize exceptions
@@ -39,7 +40,7 @@ class JSONResponse {
 		try {
 			jsonObject = new JSONObject(response);
 		} catch (JSONException exc) {
-			throw new BrowserIDException("Invalid JSON",exc);
+			throw new BrowserIDException("Invalid JSON", exc);
 		}
 
 		if ((status = getStringFromJSON("status")) == null) {
@@ -53,9 +54,7 @@ class JSONResponse {
 
 		audience = getStringFromJSON("audience");
 		email = getStringFromJSON("email");
-		expires = jsonObject.get("expires") == null ? 0 : (long) jsonObject
-				.get("expires");
-
+		expires = getLongFromJSON("expires");
 		issuer = getStringFromJSON("issuer");
 		reason = getStringFromJSON("reason");
 	}
@@ -84,17 +83,31 @@ class JSONResponse {
 		return status;
 	}
 
-	private String getStringFromJSON(final String str) {
-		try {
-			Object jsonStr = jsonObject.get(str);
-			if (jsonStr != null) {
-				return (String) jsonStr;
-			}
+	private long getLongFromJSON(final String key) {
+		if (jsonObject.has(key)) {
+			try {				
+				return jsonObject.getLong(key);
 
-		} catch (RuntimeException exc) {
-			throw new BrowserIDException(String.format(
-					"Couldn't get string value for '%s'", str));
+			} catch (final JSONException jsonExc) {
+				throw new BrowserIDException(String.format(
+						"Invalid value for '%s'", key));
+			}
 		}
+
+		return 0L;
+	}
+		
+	private String getStringFromJSON(final String key) {
+		if (jsonObject.has(key)) {
+			try {				
+				return jsonObject.getString(key);
+
+			} catch (final JSONException jsonExc) {
+				throw new BrowserIDException(String.format(
+						"Invalid value for '%s'", key));
+			}
+		}
+
 		return null;
 	}
 
