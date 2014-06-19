@@ -5,7 +5,8 @@ import info.modprobe.browserid.BrowserIDResponse.Status;
 import info.modprobe.browserid.Verifier;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
 @WebServlet(value = "/in")
 public class In extends HttpServlet {
 
-	private static final long serialVersionUID = -452837824924983488L;
+	private static final long serialVersionUID = -452837824924983489L;
 	private static final Logger log = LoggerFactory.getLogger(In.class);
 
 	@Override
@@ -28,7 +29,15 @@ public class In extends HttpServlet {
 			final HttpServletResponse resp) throws ServletException,
 			IOException {
 
-		final String audience = req.getServerName();
+		URL url = null;
+		try {
+			url = new URL(req.getRequestURL().toString());
+		} catch (MalformedURLException ignored) {
+		}
+		StringBuilder urlBuilder = new StringBuilder()
+				.append(url.getProtocol()).append("://").append(url.getHost())
+				.append(':').append(url.getPort());
+		final String audience = urlBuilder.toString();
 		final String assertion = req.getParameter("assertion");
 		final Verifier verifier = new Verifier();
 		final BrowserIDResponse personaResponse = verifier.verify(assertion,
