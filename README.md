@@ -4,25 +4,24 @@
 
 BrowserID Verifier is a simple verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md) but, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
 
-The only external dependencies are SLF4J and minimal-json. 
-Since minimal-json is only used to parse the response, it might become unnecessary in the future.
+The only external dependencies are SLF4J and json.org. 
 
 
-The usage is something like this:
+To use it, just write something like:
 ```java
 BrowserIDResponse loginRepsonse = verifier.verify(assertion, AUDIENCE);
 ```
 
 Find a simple, yet complete [live sample here](http://browserid-verifier.user454322.cloudbees.net) with its [source code](https://github.com/user454322/browserid-verifier/tree/master/sample).
 
-## Usage
+## How to use it
 ### 1. Add it as a dependency
  Its Maven coordinate is `info.modprobe:browserid-verifier:<version>` in a pom file it would look like:
 ```xml
    <dependency>
       <groupId>info.modprobe</groupId>
       <artifactId>browserid-verifier</artifactId>
-      <version>0.1-SNAPSHOT</version>
+      <version>0.2-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -42,7 +41,7 @@ It is hosted in oss.sonatype.org repository, so it is necessary to add the repos
 　　 
 
 
-### 2. Use
+### 2. Use it
 In the server side:
 ```java
 BrowserIDResponse loginRepsonse = verifier.verify(assertion, audience);
@@ -70,7 +69,7 @@ In the client side:
 
 	<script type="text/javascript">
 		var currentUser = '${sessionScope.email}';
-		if(!currentUser){
+		if(!currentUser) {
 			/* If falsy set it to the literal null */
 			currentUser = null;
 		}
@@ -113,7 +112,10 @@ In the client side:
 ```
 [Example](https://github.com/user454322/browserid-verifier/blob/master/sample/src/main/webapp/index.jsp)
 
-This project is based in code from https://github.com/mozilla/browserid-cookbook
+
+
+
+<sub>This project is based in code from https://github.com/mozilla/browserid-cookbook</sub>
 
 
 
