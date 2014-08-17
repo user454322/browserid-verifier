@@ -44,8 +44,9 @@ It is hosted in oss.sonatype.org repository, so it is necessary to add the repos
 ### 2. Use it
 In the server side:
 ```java
-BrowserIDResponse loginRepsonse = verifier.verify(assertion, audience);
-Status status = loginRepsonse.getStatus();
+final Verifier verifier = new Verifier()
+final BrowserIDResponse loginRepsonse = verifier.verify(assertion, audience);
+final Status status = loginRepsonse.getStatus();
 if (status == Status.OK) {
   HttpSession session = request.getSession(true);
   session.setAttribute("email", email);
