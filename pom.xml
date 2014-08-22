@@ -70,7 +70,7 @@
 					<useReleaseProfile>false</useReleaseProfile>
 					<releaseProfiles>release</releaseProfiles>
 					<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
-					<goals>deploy</goals>
+					<goals>deploy nexus-staging:release</goals>
 				</configuration>
 			</plugin>
 			<plugin>
