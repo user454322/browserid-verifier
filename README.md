@@ -2,9 +2,9 @@
 
 
 
-BrowserID Verifier is a simple verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md) but, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
+BrowserID Verifier is a simple Java verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md) but, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
 
-The only external dependencies are SLF4J and json.org. 
+The only external dependencies are SLF4J and json.org<sup>1</sup>. 
 
 
 To use it, just write something like:
@@ -25,20 +25,8 @@ Find a simple, yet complete [live sample here](http://browserid-verifier.user454
     </dependency>
 ```
 
-It is hosted in oss.sonatype.org repository, so it is necessary to add the repository:
-```xml
-   <repository>
-     <id>browserid-snapshots</id>
-     <name>browserid-snapshots</name>
-     <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-   </repository>
-```
 [Example](https://github.com/user454322/browserid-verifier/blob/master/sample/pom.xml)
 
-<sub>Eventually it is going to be in [Maven Central Repository](http://search.maven.org).</sub>
-
-
-　　 
 
 
 ### 2. Use it
@@ -113,8 +101,11 @@ In the client side:
 ```
 [Example](https://github.com/user454322/browserid-verifier/blob/master/sample/src/main/webapp/index.jsp)
 
+<br />
 
+1. This means that [the use of the software is restricted for Good](http://www.json.org/license.html).
 
+<br />
 
 <sub>This project is based in code from https://github.com/mozilla/browserid-cookbook</sub>
 
