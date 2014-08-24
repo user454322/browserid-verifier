@@ -21,7 +21,7 @@ Find a simple, yet complete [live sample here](http://browserid-verifier.user454
    <dependency>
       <groupId>info.modprobe</groupId>
       <artifactId>browserid-verifier</artifactId>
-      <version>0.2-SNAPSHOT</version>
+      <version>0.2</version>
     </dependency>
 ```
 
