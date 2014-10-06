@@ -16,7 +16,7 @@ Find a simple, yet complete [live sample here](http://browserid-verifier.user454
 
 ## How to use it
 ### 1. Add it as a dependency
- Its Maven coordinate is `info.modprobe:browserid-verifier:<version>` in a pom file it would look like:
+ Its Maven coordinate is `info.modprobe:browserid-verifier:<version>`; in a pom file it would look like:
 ```xml
    <dependency>
       <groupId>info.modprobe</groupId>
@@ -103,7 +103,7 @@ In the client side:
 
 <br />
 
-1. This means that [the use of the software is restricted for Good](http://www.json.org/license.html).
+1. This implies that [the use of the software is restricted for Good](http://www.json.org/license.html).
 
 <br />
 
