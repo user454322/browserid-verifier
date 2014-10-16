@@ -69,11 +69,11 @@ public class Verifier {
 
 		try {
 			/* Prepare connection */
-			JSONRequest body = new JSONRequest(assertion, audience);
+			final JSONRequest body = new JSONRequest(assertion, audience);
 			log.debug("Verifying {} using: {}", body.toString(), this.url);
-			URL verifierURL = new URL(this.url);
+			final URL verifierURL = new URL(this.url);
 			String response = "";
-			HttpsURLConnection connection = (HttpsURLConnection) verifierURL
+			final HttpsURLConnection connection = (HttpsURLConnection) verifierURL
 					.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type",
@@ -81,7 +81,7 @@ public class Verifier {
 			connection.setDoOutput(true);
 
 			/* Write to the connection */
-			try (DataOutputStream wr = new DataOutputStream(
+			try (final DataOutputStream wr = new DataOutputStream(
 					connection.getOutputStream())) {
 				wr.writeBytes(body.toString());
 				wr.flush();
@@ -90,7 +90,7 @@ public class Verifier {
 			}
 
 			/* Read from the connection */
-			try (Scanner scanner = new Scanner(connection.getInputStream(),
+			try (final Scanner scanner = new Scanner(connection.getInputStream(),
 					StandardCharsets.UTF_8.toString())) {
 				response = scanner.useDelimiter("\\A").hasNext() ? scanner
 						.next() : "";
@@ -104,8 +104,8 @@ public class Verifier {
 
 			return new BrowserIDResponse(response);
 
-		} catch (IOException exc) {
-			throw new BrowserIDException(exc);
+		} catch (final IOException ioexc) {
+			throw new BrowserIDException(ioexc);
 		}
 	}
 
