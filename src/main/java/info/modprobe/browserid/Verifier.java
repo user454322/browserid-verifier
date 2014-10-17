@@ -34,10 +34,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Verifier {
 
-	public static final long DEFAULT_TIMEOUT = Long.MAX_VALUE;
 	public static final String DEFAULT_URL = "https://verifier.login.persona.org/verify";
 	private static final Logger log = LoggerFactory.getLogger(Verifier.class);
-	private final long timeOut;
 	private final String url;
 
 	/**
@@ -46,35 +44,10 @@ public class Verifier {
 	 */
 	public Verifier() {
 		this.url = DEFAULT_URL;
-		timeOut = DEFAULT_TIMEOUT;
 	}
 
 	public Verifier(final String url) {
 		this.url = url;
-		timeOut = DEFAULT_TIMEOUT;
-	}
-
-	/**
-	 * Creates a {@code Verifier} object with the provided arguments.
-	 *
-	 * @param url
-	 * @param timeOut
-	 *            in milliseconds to wait for the verification process. Unlike
-	 *            the low level {@link URLConnection#setConnectTimeout(int)} and
-	 *            {@link URLConnection#setReadTimeout(int)} which set different
-	 *            time outs for the connection and read processes, this a global
-	 *            time out for the entire verification process.
-	 *
-	 */
-	public Verifier(final String url, final long timeOut) {
-		if (timeOut <= 0)
-			throw new IllegalArgumentException("Timeout value should be > 0");
-		this.timeOut = timeOut;
-		this.url = url;
-	}
-
-	public long getTimeOut() {
-		return timeOut;
 	}
 
 	public String getURL() {
@@ -83,21 +56,32 @@ public class Verifier {
 
 	@Override
 	public String toString() {
-		return String.format("URL: %s  timeout: %s", this.url, this.timeOut);
+		return String.format("URL: %s", this.url);
 	}
 
+	public BrowserIDResponse verify(final String assertion,
+			final String audience){
+		return verify(assertion, audience, Long.MAX_VALUE);
+	}
 	/***
 	 * @param assertion
 	 * @param audience
+	 * @param timeOut
+	 *            in milliseconds to wait for the verification process. Unlike
+	 *            the low level {@link URLConnection#setConnectTimeout(int)} and
+	 *            {@link URLConnection#setReadTimeout(int)} which set different
+	 *            time outs for the connection and read processes, this a global
+	 *            time out for the entire verification process.
+	 *            Its value should be > 0.
+	 *            
 	 * @return the result of the verification
 	 * 
 	 * @throws {@code BrowserIDResponse} if there is a failure in the
 	 *         verification process
-	 * @throws {@code IllegalArgumentException} if assertion or audience are not
-	 *         provided
+	 * @throws {@code IllegalArgumentException} if the arguments are invalid.
 	 */
 	public BrowserIDResponse verify(final String assertion,
-			final String audience) {
+			final String audience, final long timeOut) {
 		log.debug("assertion: {}{} audience: {} ", assertion,
 				System.lineSeparator(), audience);
 		if (assertion == null || !(assertion.length() > 0)) {
@@ -105,6 +89,9 @@ public class Verifier {
 		}
 		if (audience == null || !(audience.length() > 0)) {
 			throw new IllegalArgumentException("audience is mandatory");
+		}
+		if (timeOut <= 0) {
+			throw new IllegalArgumentException("Timeout value should be > 0");
 		}
 
 		try {
