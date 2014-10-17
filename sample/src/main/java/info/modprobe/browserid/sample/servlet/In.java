@@ -40,8 +40,9 @@ public class In extends HttpServlet {
 		final String audience = urlBuilder.toString();
 		final String assertion = req.getParameter("assertion");
 		final Verifier verifier = new Verifier();
+		final long verificationTimeOut = 7000; // 7 seconds
 		final BrowserIDResponse personaResponse = verifier.verify(assertion,
-				audience);
+				audience, 7000);
 		final Status status = personaResponse.getStatus();
 
 		if (status == Status.OK) {
