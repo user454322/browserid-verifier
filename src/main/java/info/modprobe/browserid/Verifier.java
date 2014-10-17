@@ -8,8 +8,16 @@ package info.modprobe.browserid;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -26,8 +34,10 @@ import org.slf4j.LoggerFactory;
  */
 public class Verifier {
 
+	public static final long DEFAULT_TIMEOUT = Long.MAX_VALUE;
 	public static final String DEFAULT_URL = "https://verifier.login.persona.org/verify";
 	private static final Logger log = LoggerFactory.getLogger(Verifier.class);
+	private final long timeOut;
 	private final String url;
 
 	/**
@@ -36,14 +46,44 @@ public class Verifier {
 	 */
 	public Verifier() {
 		this.url = DEFAULT_URL;
+		timeOut = DEFAULT_TIMEOUT;
 	}
 
 	public Verifier(final String url) {
 		this.url = url;
+		timeOut = DEFAULT_TIMEOUT;
+	}
+
+	/**
+	 * Creates a {@code Verifier} object with the provided arguments.
+	 *
+	 * @param url
+	 * @param timeOut
+	 *            in milliseconds to wait for the verification process. Unlike
+	 *            the low level {@link URLConnection#setConnectTimeout(int)} and
+	 *            {@link URLConnection#setReadTimeout(int)} which set different
+	 *            time outs for the connection and read processes, this a global
+	 *            time out for the entire verification process.
+	 *
+	 */
+	public Verifier(final String url, final long timeOut) {
+		if (timeOut <= 0)
+			throw new IllegalArgumentException("Timeout value should be > 0");
+		this.timeOut = timeOut;
+		this.url = url;
+	}
+
+	public long getTimeOut() {
+		return timeOut;
 	}
 
 	public String getURL() {
 		return url;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("URL: %s  timeout: %s", this.url, this.timeOut);
 	}
 
 	/***
@@ -68,34 +108,32 @@ public class Verifier {
 		}
 
 		try {
-			/* Prepare connection */
 			final JSONRequest body = new JSONRequest(assertion, audience);
 			log.debug("Verifying {} using: {}", body.toString(), this.url);
 			final URL verifierURL = new URL(this.url);
+			final HttpsURLConnection connection = prepareConnection(verifierURL);
 			String response = "";
-			final HttpsURLConnection connection = (HttpsURLConnection) verifierURL
-					.openConnection();
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type",
-					"application/json; charset=utf-8");
-			connection.setDoOutput(true);
+			/* Execute the verification task */
+			final ExecutorService verifierExecutor = Executors
+					.newSingleThreadExecutor();
+			final Callable<String> verifyTask = new VerifyTask(connection,
+					body);
+			final Future<String> verifyExcution = verifierExecutor
+					.submit(verifyTask);
 
-			/* Write to the connection */
-			try (final DataOutputStream wr = new DataOutputStream(
-					connection.getOutputStream())) {
-				wr.writeBytes(body.toString());
-				wr.flush();
-			} catch (IOException wrExc) {
-				throw wrExc;
-			}
+			verifierExecutor.shutdown();
+			try {
+				response = verifyExcution.get(timeOut, TimeUnit.MILLISECONDS);
 
-			/* Read from the connection */
-			try (final Scanner scanner = new Scanner(connection.getInputStream(),
-					StandardCharsets.UTF_8.toString())) {
-				response = scanner.useDelimiter("\\A").hasNext() ? scanner
-						.next() : "";
-			} catch (IOException rdExc) {
-				throw rdExc;
+			} catch (final InterruptedException interruptedExc) {
+				log.warn("{} {}", interruptedExc.getLocalizedMessage(),
+						interruptedExc);
+
+			} catch (final TimeoutException tiomeOutExc) {
+				throw new BrowserIDException(tiomeOutExc);
+
+			} catch (final ExecutionException execExc) {
+				throw new BrowserIDException(execExc.getCause());
 			}
 
 			log.debug("Response from verifier: [{}] {} {}",
@@ -107,6 +145,49 @@ public class Verifier {
 		} catch (final IOException ioexc) {
 			throw new BrowserIDException(ioexc);
 		}
+	}
+
+	private HttpsURLConnection prepareConnection(final URL verifierURL)
+			throws IOException {
+
+		final HttpsURLConnection connection = (HttpsURLConnection) verifierURL
+				.openConnection();
+		connection.setRequestMethod("POST");
+		connection.setRequestProperty("Content-Type",
+				"application/json; charset=utf-8");
+		connection.setDoOutput(true);
+
+		return connection;
+	}
+
+	private static class VerifyTask implements Callable<String> {
+
+		private final HttpsURLConnection connection;
+		private final JSONRequest jsonRequest;
+
+		VerifyTask(final HttpsURLConnection connection,
+				final JSONRequest jsonRequest) {
+			this.connection = connection;
+			this.jsonRequest = jsonRequest;
+		}
+
+		@Override
+		public String call() throws IOException {
+			/* Write to the connection */
+			try (final DataOutputStream wr = new DataOutputStream(
+					connection.getOutputStream())) {
+				wr.writeBytes(jsonRequest.toString());
+				wr.flush();
+			}
+
+			/* Read from the connection */
+			try (final Scanner scanner = new Scanner(
+					connection.getInputStream(),
+					StandardCharsets.UTF_8.toString())) {
+				return scanner.useDelimiter("\\A").hasNext() ? scanner.next()
+						: "";
+			}
+		}//public String call() throws IOException {
 	}
 
 }
