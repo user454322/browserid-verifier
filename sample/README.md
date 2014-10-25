@@ -3,7 +3,7 @@ Sample project for [Java BrowserID Verifier](https://github.com/user454322/brows
 <br />
 
 1. Clone it: `git clone https://github.com/user454322/browserid-verifier.git`
-2. Run it: then `cd browserid-verifier/sample/ && mvn jetty:run`
+2. Run it: `cd browserid-verifier/sample/ && mvn jetty:run`
 3. See it: go to [http://127.0.0.1:8080/](http://127.0.0.1:8080/)
 
 <br />
