@@ -24,7 +24,7 @@ Find a simple, yet complete [live sample here](http://browserid-verifier.user454
     </dependency>
 ```
 
-[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/pom.xml)
+[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/pom.xml#L19-23)
 
 
 
@@ -52,7 +52,7 @@ if (status == Status.OK) {
 	log.info("Sign in failed: {}", personaResponse.getReason());
 }
 ```
-[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/src/main/java/info/modprobe/browserid/sample/servlet/In.java)
+[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/java/info/modprobe/browserid/sample/servlet/In.java#L42-63)
 
 
 　　 
@@ -107,7 +107,7 @@ In the client side:
 	</script>
 
 ```
-[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/src/main/webapp/index.jsp)
+[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/webapp/index.jsp#L42-84)
 
 <br />
 
