@@ -1,3 +1,4 @@
+# BrowserID Verifier
 
 
 BrowserID Verifier is a simple Java verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md) but, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
