@@ -40,22 +40,26 @@ public class In extends HttpServlet {
 		final String audience = urlBuilder.toString();
 		final String assertion = req.getParameter("assertion");
 		final Verifier verifier = new Verifier();
-		final long verificationTimeOut = 7000; // 7 seconds
+		final long verificationTimeOut = 10000; // 10 seconds
 		final BrowserIDResponse personaResponse = verifier.verify(assertion,
-				audience, 7000);
+				audience, verificationTimeOut);
 		final Status status = personaResponse.getStatus();
 
 		if (status == Status.OK) {
 			/* Authentication with Persona was successful */
-			String email = personaResponse.getEmail();
-			log.info("{} has sucessfully signed in", email);
-			HttpSession session = req.getSession(true);
+			final String email = personaResponse.getEmail();
+			log.info("Signing in {}", email);
+			HttpSession session;
+			if ((session = req.getSession(false)) != null) {
+				// Prevent session hijacking
+				session.invalidate();
+			}
+			session = req.getSession(true);
 			session.setAttribute("email", email);
 
 		} else {
 			/* Authentication with Persona failed */
 			log.info("Sign in failed: {}", personaResponse.getReason());
-
 		}
 
 	}

@@ -32,16 +32,25 @@ Find a simple, yet complete [live sample here](http://browserid-verifier.user454
 ### 2. Use it
 In the server side:
 ```java
-final Verifier verifier = new Verifier()
-final BrowserIDResponse loginRepsonse = verifier.verify(assertion, audience);
-final Status status = loginRepsonse.getStatus();
+final Verifier verifier = new Verifier();
+final BrowserIDResponse personaResponse = verifier.verify(assertion, audience);
+final Status status = personaResponse.getStatus();
+
 if (status == Status.OK) {
-  HttpSession session = request.getSession(true);
-  session.setAttribute("email", email);
-  //...
-}  else {
-  log.info("Sign in failed...");
-  //...
+	/* Authentication with Persona was successful */
+	final String email = personaResponse.getEmail();
+	log.info("Signing in {}", email);
+	HttpSession session;
+	if ((session = req.getSession(false)) != null) {
+		// Prevent session hijacking
+		session.invalidate();
+	}
+	session = req.getSession(true);	
+	session.setAttribute("email", email);
+
+} else {
+	/* Authentication with Persona failed */
+	log.info("Sign in failed: {}", personaResponse.getReason());
 }
 ```
 [Example](https://github.com/user454322/browserid-verifier/blob/master/sample/src/main/java/info/modprobe/browserid/sample/servlet/In.java)
@@ -59,7 +68,7 @@ In the client side:
 	<script type="text/javascript">
 		var currentUser = '${sessionScope.email}';
 		if(!currentUser) {
-			/* If falsy set it to the literal null */
+			// If falsy set it to the literal null
 			currentUser = null;
 		}
 

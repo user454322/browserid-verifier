@@ -44,7 +44,7 @@
 		<script type="text/javascript">
 			var currentUser = '${sessionScope.email}';
 			if(!currentUser){
-				/* If falsy set it to the literal null */
+				// If falsy set it to the literal null
 				currentUser = null;
 			}
 	
