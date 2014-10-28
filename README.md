@@ -11,7 +11,7 @@ To use it, just write something like:
 BrowserIDResponse loginRepsonse = verifier.verify(assertion, AUDIENCE);
 ```
 
-Find a simple, yet complete [live sample here](https://browserid-verifier-sample.herokuapp.com) with its [source code](https://github.com/user454322/browserid-verifier/tree/master/sample/app).
+Find a simple, yet complete [live sample here](https://browserid-verifier-sample.herokuapp.com) with its [source code](https://browseridverifiersample-user454322.rhcloud.com/).
 
 ## How to use it
 ### 1. Add it as a dependency

@@ -8,5 +8,5 @@ Sample project for [Java BrowserID Verifier](https://github.com/user454322/brows
 
 <br />
 
-Alternatively see a [live sample](https://browserid-verifier-sample.herokuapp.com) in Heroku.
+Alternatively see a [live sample](https://browseridverifiersample-user454322.rhcloud.com/) in OpenShift.
 
