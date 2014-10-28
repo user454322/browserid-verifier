@@ -1,6 +1,4 @@
-# BrowserID Verifier
-
-[![Build Status](https://snap-ci.com/user454322/browserid-verifier/branch/master/build_image)](https://snap-ci.com/user454322/browserid-verifier/branch/master)
+# BrowserID Verifier [![Build Status](https://snap-ci.com/user454322/browserid-verifier/branch/master/build_image)](https://snap-ci.com/user454322/browserid-verifier/branch/master)
 
 
 BrowserID Verifier is a simple Java verifier for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md) but, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
