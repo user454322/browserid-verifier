@@ -32,7 +32,7 @@ public class JSONRequestTest {
 		try {
 			new JSONObject(requestStr);
 
-		} catch (JSONException exc) {
+		} catch (final JSONException exc) {
 			fail(String.format("'%s' seems to be invalid", requestStr));
 		}
 	}

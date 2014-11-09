@@ -32,7 +32,7 @@ public class In extends HttpServlet {
 		URL url = null;
 		try {
 			url = new URL(req.getRequestURL().toString());
-		} catch (MalformedURLException ignored) {
+		} catch (final MalformedURLException ignored) {
 		}
 		StringBuilder urlBuilder = new StringBuilder()
 				.append(url.getProtocol()).append("://").append(url.getHost())

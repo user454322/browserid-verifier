@@ -44,7 +44,7 @@ class JSONResponse {
 
 		try {
 			jsonObject = new JSONObject(response);
-		} catch (JSONException exc) {
+		} catch (final JSONException exc) {
 			throw new BrowserIDException("Invalid JSON", exc);
 		}
 
