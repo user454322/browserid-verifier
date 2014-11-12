@@ -15,7 +15,7 @@
 
 	<body>
 		<h3>
-		Login using <a href="http://www.mozilla.org/en-US/persona">Mozilla
+		"Sing in / Sign up" using <a href="http://www.mozilla.org/en-US/persona">Mozilla
 			Persona</a> a Browser ID implementation
 		</h3>
 
