@@ -61,13 +61,14 @@ public class Verifier {
 
 	public BrowserIDResponse verify(final String assertion,
 			final String audience){
-		return verify(assertion, audience, Long.MAX_VALUE);
+		return verify(assertion, audience, 1, TimeUnit.MINUTES);
 	}
+
 	/***
 	 * @param assertion
 	 * @param audience
 	 * @param timeOut
-	 *            in milliseconds to wait for the verification process. Unlike
+	 *            To wait for the verification process. Unlike
 	 *            the low level {@link URLConnection#setConnectTimeout(int)} and
 	 *            {@link URLConnection#setReadTimeout(int)} which set different
 	 *            time outs for the connection and read processes, this a global
@@ -81,7 +82,7 @@ public class Verifier {
 	 * @throws {@code IllegalArgumentException} if the arguments are invalid.
 	 */
 	public BrowserIDResponse verify(final String assertion,
-			final String audience, final long timeOut) {
+			final String audience, final long timeOut, final TimeUnit timeUnit) {
 		log.debug("assertion: {}{} audience: {} ", assertion,
 				System.lineSeparator(), audience);
 		if (assertion == null || !(assertion.length() > 0)) {
@@ -110,7 +111,7 @@ public class Verifier {
 
 			verifierExecutor.shutdown();
 			try {
-				response = verifyExcution.get(timeOut, TimeUnit.MILLISECONDS);
+				response = verifyExcution.get(timeOut, timeUnit);
 
 			} catch (final InterruptedException interruptedExc) {
 				log.warn("{} {}", interruptedExc.getLocalizedMessage(),

@@ -7,6 +7,7 @@ import info.modprobe.browserid.Verifier;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,9 +41,9 @@ public class In extends HttpServlet {
 		final String audience = urlBuilder.toString();
 		final String assertion = req.getParameter("assertion");
 		final Verifier verifier = new Verifier();
-		final long verificationTimeOut = 10000; // 10 seconds
+		final long verificationTimeOut = 10;
 		final BrowserIDResponse personaResponse = verifier.verify(assertion,
-				audience, verificationTimeOut);
+				audience, verificationTimeOut, TimeUnit.SECONDS);
 		final Status status = personaResponse.getStatus();
 
 		if (status == Status.OK) {
