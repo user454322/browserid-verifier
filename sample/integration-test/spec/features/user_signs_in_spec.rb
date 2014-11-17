@@ -9,4 +9,3 @@ describe "sign in", :type => :feature, :js => true do
 
 end
 
-
