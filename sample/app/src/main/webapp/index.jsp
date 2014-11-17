@@ -23,14 +23,14 @@
 		<br>
 		<c:choose>
 			<c:when test="${empty sessionScope.email}">
-				<input type="image" src="persona-only-signin-link.png" name="image"
+				<input id="persona_sign_in_up" type="image" src="persona-only-signin-link.png" name="image"
 					onclick="navigator.id.request();">       
 			</c:when>
 			<c:otherwise>
-	        	<button type="button" onclick="navigator.id.logout();">Sign out</button>        	
+			<button id="sign_out" type="button" onclick="navigator.id.logout();">Sign out</button>
 	    	</c:otherwise>
 		</c:choose>
-			 	
+
 	    <br />  
 		<h4>
 			<a href="https://github.com/user454322/browserid-verifier">
@@ -86,3 +86,4 @@
 	
 	</body>
 </html>
+
