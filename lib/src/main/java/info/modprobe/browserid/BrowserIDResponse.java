@@ -16,8 +16,8 @@ import java.util.Date;
  * 
  * 
  * @see <a
- *      href="https://developer.mozilla.org/en/Persona/Remote_Verification_API">
- *      Persona's <i>Remote Verification API</i> </a>
+ *      href="https://developer.mozilla.org/en/Persona/Remote_Verification_API">Persona's
+ *      <i>Remote Verification API</i> </a>
  * 
  * 
  * <br/>
