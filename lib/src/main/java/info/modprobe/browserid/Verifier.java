@@ -74,7 +74,8 @@ public class Verifier {
 	 *            time outs for the connection and read processes, this a global
 	 *            time out for the entire verification process.
 	 *            Its value should be > 0.
-	 *            
+	 * @param timeUnit    
+	 *
 	 * @return the result of the verification
 	 * 
 	 * @throws {@code BrowserIDResponse} if there is a failure in the
@@ -153,7 +154,7 @@ public class Verifier {
 		private final HttpsURLConnection connection;
 		private final JSONRequest jsonRequest;
 
-		VerifyTask(final HttpsURLConnection connection,
+		private VerifyTask(final HttpsURLConnection connection,
 				final JSONRequest jsonRequest) {
 			this.connection = connection;
 			this.jsonRequest = jsonRequest;
