@@ -16,7 +16,6 @@ describe "sign in", :type => :feature, :js => true do
     end
     within_window persona_window do
       Capybara.default_wait_time = 10
-      puts @email
       find_by_id('authentication_email').set(@email)
       find(:xpath, '//*[@id="authentication_form"]/p[4]/button[1]').click
       find_by_id('authentication_password').set(@passwd)
