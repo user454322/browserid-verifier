@@ -8,6 +8,6 @@ the following Gems are required:
  * selenium-webdriver -v 2.44.0
  
 
-To run the tests: 
+To run the specs:  
 `rspec spec/features/user_signs_in_spec.rb`
 
