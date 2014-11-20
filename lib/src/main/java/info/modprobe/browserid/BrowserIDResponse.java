@@ -188,7 +188,7 @@ public class BrowserIDResponse {
 	public void validateEmail() throws MalformedEmailAddressException {
 		if (this.email == null || !this.email.contains("@")) {
 			throw new MalformedEmailAddressException(String.format(
-					"Inalid email '%s'", this.email));
+					"Invalid email '%s'", this.email));
 		}
 	}
 

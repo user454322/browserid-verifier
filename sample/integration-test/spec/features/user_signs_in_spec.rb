@@ -3,7 +3,6 @@ require 'yaml'
 
 describe "sign in", :type => :feature, :js => true do
   before(:all) do
-    puts "Nanoni"
     config = YAML.load_file('config.yaml')
     @email = config['authentication_email']
     @passwd = config['authentication_password']

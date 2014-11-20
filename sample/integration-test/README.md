@@ -9,5 +9,6 @@ the following Gems are required:
  
 
 To run the specs:  
-`rspec spec/features/user_signs_in_spec.rb`
+ * Edit the file `config.yaml` with valid Persona credentials.
+ * Execute `rspec spec/features/user_signs_in_spec.rb`
 

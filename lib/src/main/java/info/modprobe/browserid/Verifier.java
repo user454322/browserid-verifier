@@ -144,6 +144,7 @@ public class Verifier {
 		connection.setRequestMethod("POST");
 		connection.setRequestProperty("Content-Type",
 				"application/json; charset=utf-8");
+		connection.setRequestProperty("Accept-Charset", "utf-8");
 		connection.setDoOutput(true);
 
 		return connection;
