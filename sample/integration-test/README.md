@@ -7,7 +7,9 @@ the following Gems are required:
  * capybara -v 2.4.4
  * selenium-webdriver -v 2.44.0
  
+  
 
 To run the specs:  
-`rspec spec/features/user_signs_in_spec.rb`
+ * Edit the file `config.yaml` with valid Persona credentials.
+ * Execute `rspec spec/features/user_signs_in_spec.rb`
 
