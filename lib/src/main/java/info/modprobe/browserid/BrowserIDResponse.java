@@ -175,11 +175,13 @@ public class BrowserIDResponse {
 		return jsonResponse.toString();
 	}
 
-	/*
-	 * audience
+	/**
+	 * Audience:
 	 * The protocol, domain name, and port of your site. For example, 
 	 * "https://example.com:443".
-	 * See: https://developer.mozilla.org/en/Persona/Remote_Verification_API 
+	 * 
+	 * @see <a href="https://developer.mozilla.org/en/Persona/Remote_Verification_API">
+			Remote_Verification API</a>
 	 */
 	public void validateAudience() throws MalformedURLException {
 		new URL(this.audience);
@@ -188,7 +190,7 @@ public class BrowserIDResponse {
 	public void validateEmail() throws MalformedEmailAddressException {
 		if (this.email == null || !this.email.contains("@")) {
 			throw new MalformedEmailAddressException(String.format(
-					"Inalid email '%s'", this.email));
+					"Invalid email '%s'", this.email));
 		}
 	}
 

@@ -5,6 +5,20 @@
 
 package info.modprobe.browserid;
 
+import static info.modprobe.browserid.TestUtils.AUDIENCE;
+import static info.modprobe.browserid.TestUtils.EMAIL;
+import static info.modprobe.browserid.TestUtils.EXPIRES;
+import static info.modprobe.browserid.TestUtils.INVALID_STATUS;
+import static info.modprobe.browserid.TestUtils.ISSUER;
+import static info.modprobe.browserid.TestUtils.REASON;
+import static info.modprobe.browserid.TestUtils.RESPONSE_FAILURE;
+import static info.modprobe.browserid.TestUtils.RESPONSE_INVALID_JSON;
+import static info.modprobe.browserid.TestUtils.RESPONSE_INVALID_STATUS;
+import static info.modprobe.browserid.TestUtils.RESPONSE_MIXED;
+import static info.modprobe.browserid.TestUtils.RESPONSE_NO_EXPIRES;
+import static info.modprobe.browserid.TestUtils.RESPONSE_NO_STATUS;
+import static info.modprobe.browserid.TestUtils.RESPONSE_OKAY;
+import static info.modprobe.browserid.TestUtils.RESPONSE_WRONG_AUDIENCE_TYPE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import info.modprobe.browserid.BrowserIDResponse.Status;
@@ -17,30 +31,13 @@ import org.junit.rules.ExpectedException;
 
 public class BrowserIDResponseTest {
 
-	private static final String AUDIENCE = "https://example.com";
-	private static final String EMAIL = "bob@mail.com";
-	private static final long EXPIRES = 1223334444150L;
-	private static final String INVALID_STATUS = "invStatu";
-	private static final String ISSUER = "login.persona.org";
-	private static final String REASON = "assertion has expired";
-
-	private static final String INVALID_JSON_RESPONSE = "\"status\":\"failure\",\"reason\":\"assertion has expired\"";
-	private static final String FAILURE_RESPONSE = "{\"status\":\"failure\",\"reason\":\"assertion has expired\"}";
-	private static final String INVALID_STATUS_RESPONSE = String
-			.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"%s\"}",
-					AUDIENCE, INVALID_STATUS);
-	private static final String MIXED_RESPONSE = String.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"failure\",\"status\":\"okay\"}", AUDIENCE);
-	private static final String NO_STATUS_RESPONSE = String.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\"}", AUDIENCE);
-	private static final String NO_EXPIRES_RESPONSE = String.format("{\"audience\":\"%s\",\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}", AUDIENCE);
-	private static final String OKAY_RESPONSE = String.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}", AUDIENCE);
-	private static final String WRONG_AUDIENCE_TYPE_RESPONSE = "{\"audience\":true,\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
 
 	@Rule
-	public final ExpectedException expectedException = ExpectedException.none();	
+	public final ExpectedException expectedException = ExpectedException.none();
 
 	@Test
 	public void failureResponse() {
-		final BrowserIDResponse fail = new BrowserIDResponse(FAILURE_RESPONSE);
+		final BrowserIDResponse fail = new BrowserIDResponse(RESPONSE_FAILURE);
 		assertEquals(Status.FAILURE, fail.getStatus());
 		assertNull(fail.getAudience());
 		assertNull(fail.getEmail());
@@ -52,7 +49,7 @@ public class BrowserIDResponseTest {
 	@Test
 	public void invalidResponse() {
 		expectedException.expect(BrowserIDException.class);
-		new BrowserIDResponse(INVALID_JSON_RESPONSE);
+		new BrowserIDResponse(RESPONSE_INVALID_JSON);
 	}
 
 	@Test
@@ -61,29 +58,26 @@ public class BrowserIDResponseTest {
 		expectedException.expectMessage(String.format("Invalid status '%s'",
 				INVALID_STATUS));
 		BrowserIDResponse browserIDResponse = new BrowserIDResponse(
-				INVALID_STATUS_RESPONSE);
+				RESPONSE_INVALID_STATUS);
 		browserIDResponse.getStatus();
 	}
 
 	@Test
 	public void noStatusResponse() {
 		expectedException.expect(BrowserIDException.class);
-		new BrowserIDResponse(NO_STATUS_RESPONSE);
+		new BrowserIDResponse(RESPONSE_NO_STATUS);
 	}
 
 	@Test
 	public void mixedResponse() {
 		expectedException.expect(BrowserIDException.class);
 		expectedException.expectMessage("Invalid JSON");
-		new BrowserIDResponse(MIXED_RESPONSE);
+		new BrowserIDResponse(RESPONSE_MIXED);
 	}
-	
-	
-		
-		
+
 	@Test
 	public void okayResponse() {
-		final BrowserIDResponse ok = new BrowserIDResponse(OKAY_RESPONSE);
+		final BrowserIDResponse ok = new BrowserIDResponse(RESPONSE_OKAY);
 		assertEquals(Status.OK, ok.getStatus());
 		assertEquals(AUDIENCE, ok.getAudience());
 		assertEquals(EMAIL, ok.getEmail());
@@ -95,7 +89,7 @@ public class BrowserIDResponseTest {
 	@Test
 	public void responseWithoutExpires() {
 		final BrowserIDResponse expires = new BrowserIDResponse(
-				NO_EXPIRES_RESPONSE);
+				RESPONSE_NO_EXPIRES);
 		assertEquals(Status.OK, expires.getStatus());
 		assertEquals(AUDIENCE, expires.getAudience());
 		assertEquals(EMAIL, expires.getEmail());
@@ -106,8 +100,8 @@ public class BrowserIDResponseTest {
 
 	@Test
 	public void wrongAudienceTypeResponse() {
-		expectedException.expect(BrowserIDException.class);		
-		new BrowserIDResponse(WRONG_AUDIENCE_TYPE_RESPONSE);
+		expectedException.expect(BrowserIDException.class);
+		new BrowserIDResponse(RESPONSE_WRONG_AUDIENCE_TYPE);
 	}
 
 }
