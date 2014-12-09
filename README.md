@@ -1,9 +1,7 @@
 # BrowserID Verifier   [![Build Status](https://snap-ci.com/user454322/browserid-verifier/branch/master/build_image)](https://snap-ci.com/user454322/browserid-verifier/branch/master)
 
-This library allows to easily authenticate Java web application's users by veryfing BrowserID assertions.
+This is a verification library for [Mozilla Persona](https://login.persona.org/about) written in Java. It allows to easily authenticate web application's users by veryfing BrowserID assertions.
 
-
-BrowserID Verifier is a simple Java verifier library for the [BrowserID protocol](https://github.com/mozilla/id-specs/blob/prod/browserid/index.md) but, it has been tested only with [Mozilla Persona](https://login.persona.org/about).
 
 The only external dependencies are SLF4J and json.org<sup>1</sup>. 
 
@@ -118,6 +116,5 @@ In the client side:
 <br />
 
 <sub>This project is based in code from https://github.com/mozilla/browserid-cookbook</sub>
-
 
 
