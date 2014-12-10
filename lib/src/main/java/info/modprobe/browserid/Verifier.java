@@ -84,8 +84,7 @@ public class Verifier {
 	 */
 	public BrowserIDResponse verify(final String assertion,
 			final String audience, final long timeOut, final TimeUnit timeUnit) {
-		log.debug("assertion: {}{} audience: {} ", assertion,
-				System.lineSeparator(), audience);
+		log.debug("assertion: '{}' audience: '{}'", assertion, audience);
 		if (assertion == null || !(assertion.length() > 0)) {
 			throw new IllegalArgumentException("assertion is mandatory");
 		}
@@ -98,7 +97,7 @@ public class Verifier {
 
 		try {
 			final JSONRequest body = new JSONRequest(assertion, audience);
-			log.debug("Verifying {} using: {}", body.toString(), this.url);
+			log.debug("Verifying: '{}' using: '{}'", body.toString(), this.url);
 			final URL verifierURL = new URL(this.url);
 			final HttpsURLConnection connection = prepareConnection(verifierURL);
 			String response = "";
@@ -125,9 +124,8 @@ public class Verifier {
 				throw new BrowserIDException(execExc.getCause());
 			}
 
-			log.debug("Response from verifier: [{}] {} {}",
-					connection.getResponseCode(), System.lineSeparator(),
-					response);
+			log.debug("Response from verifier: [{}] '{}'",
+					connection.getResponseCode(), response);
 
 			return new BrowserIDResponse(response);
 
