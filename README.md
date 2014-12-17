@@ -38,7 +38,7 @@ final Status status = personaResponse.getStatus();
 if (status == Status.OK) {
 	/* Authentication with Persona was successful */
 	final String email = personaResponse.getEmail();
-	log.info("Signing in {}", email);
+	log.info("Signing in '{}'", email);
 	HttpSession session;
 	if ((session = req.getSession(false)) != null) {
 		// Prevent session hijacking
