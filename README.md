@@ -52,7 +52,7 @@ if (status == Status.OK) {
 	log.info("Sign in failed: {}", personaResponse.getReason());
 }
 ```
-[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/java/info/modprobe/browserid/sample/servlet/In.java#L42-63)
+[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/java/info/modprobe/browserid/sample/servlet/In.java#L42-64)
 
 
 　　 
@@ -107,7 +107,7 @@ In the client side:
 	</script>
 
 ```
-[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/webapp/index.jsp#L42-84)
+[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/webapp/index.jsp#L42-83)
 
 <br />
 
