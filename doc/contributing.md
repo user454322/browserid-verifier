@@ -5,14 +5,14 @@ Questions and feedback is more than welcome!
 ## Requirements
 * JDK 7
 * Maven 3
-* Ruby 2.1.2 
+* Ruby 2.1.2
  * rspec 3.1.0
  * capybara 2.4.4
  * selenium-webdriver 2.44.0
 
 ## Building the library
 `cd lib`
-It is Maven project, so do:
+It is a Maven project, so do:
 *  `mvn verify` to verify
 *  `mvn test` to execute the unit tests
 *  `mvn package` to create a jar file of the library
