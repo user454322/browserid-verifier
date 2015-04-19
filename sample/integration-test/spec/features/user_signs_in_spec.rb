@@ -7,7 +7,7 @@ describe "sign in", :type => :feature, :js => true do
     @email = config['authentication_email']
     @passwd = config['authentication_password']
     @url = config['url']
-    Capybara.default_wait_time = 90
+    Capybara.default_wait_time = 30
   end
 
   it "signs in the user using Mozilla's Persona" do
