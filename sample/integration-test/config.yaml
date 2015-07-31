@@ -1,4 +1,5 @@
 authentication_email:
 authentication_password:
 url: "https://browseridverifiersample-user454322.rhcloud.com"
+#url: "https://127.0.0.1:8443"
 

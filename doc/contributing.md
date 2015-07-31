@@ -24,7 +24,7 @@ and so on.
 There is a simple web app to test the library, to see it in action do:
  1. `cd sample/app`
  1. `mvn jetty:run`
- 1. Browse to http://127.0.0.1:8080/
+ 1. Browse to https://127.0.0.1:8443/
 
 ## Executing the integration tests
 The integration tests are specified using Rspec with Capybara and Selenium, to run the integration tests do:
@@ -37,19 +37,19 @@ The integration tests are specified using Rspec with Capybara and Selenium, to r
  1. `rspec spec/features/user_signs_in_spec.rb`
 
 ## Deploy pipeline
-Snapshots of the library pass through a [Snap CI pipeline](https://snap-ci.com/user454322/browserid-verifier/branch/master) that ends in automatically deploying to Sonatype Maven's repository.
+Snapshots of the library pass through a [Snap CI pipeline](https://snap-ci.com/user454322/browserid-verifier/branch/master) that ends in automatically deploying the library to the Sonatype Maven's repository.
 
 The build, test and deploy process is trigered with every commit to the master branch, the process fails if any step in the pipeline fails. This ensures that every build has been analyzed, compiled, tested and works.
 ![Build process](process.png?raw=true "Build Process")
 The pipeline consist of:
  1. Commit to master branch.
- 1. MVN_VERIFY_LIB `mvn verify`. This a general check.
- 1. MVN_INSTALL_LIB `mvn install`. Here, the code is compiled, analyzed with FindBugs, unit tests are run, a jar file is created and installed to the local repository.
+ 1. MVN_VERIFY_LIB `mvn verify`. This is a general check.
+ 1. MVN_INSTALL_LIB `mvn install`. Here, the code is compiled, analyzed with [FindBugs](http://findbugs.sourceforge.net), unit tests are run, a jar file is created and installed to the local repository.
  1. BUILD_APP The sample app is built.
- 1. DEPLOY_APP The app is deployed to the cloud (OpenShift).
+ 1. DEPLOY_APP The app is deployed to the cloud (OpenShift) and accessible at https://browseridverifiersample-user454322.rhcloud.com.
  1. INTEGRATION_TEST Integration test (RSpec Selenium) is run.
- 1. APP_PERFORMANCE (TODO).
- 1. MVN_DEPLOY_LIB The library is deployed to [Sonatype Maven's repository](https://oss.sonatype.org/content/repositories/snapshots/info/modprobe/browserid-verifier).
+ 1. APP_PERFORMANCE (TODO). Application tests can be done with JMeter; testing the library is a bit tricky but [caliper](https://github.com/google/caliper) might be useful.
+ 1. MVN_DEPLOY_LIB The library is deployed to the [Sonatype Maven's repository](https://oss.sonatype.org/content/repositories/snapshots/info/modprobe/browserid-verifier).
 
 ## Code style
 Java code is formatted with the help of [Eclipse built-in formatter](../Eclipse_built-in-codestyle.xml) .
