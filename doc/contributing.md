@@ -8,7 +8,7 @@ Questions and feedback is more than welcome!
 * Ruby 2.1.2
  * rspec 3.1.0
  * capybara 2.4.4
- * selenium-webdriver 2.44.0
+ * selenium-webdriver 2.47.1
 
 ## Building the library
 `cd lib`
@@ -32,7 +32,7 @@ The integration tests are specified using Rspec with Capybara and Selenium, to r
  1. Make sure Ruby 2.1.2 is being used
  1. `gem install rspec -v 3.1.0`
  1. `gem install capybara -v 2.4.4`
- 1. `gem install selenium-webdriver -v 2.44.0`
+ 1. `gem install selenium-webdriver -v 2.47.1`
  1.  Adjust  `config.yaml`
  1. `rspec spec/features/user_signs_in_spec.rb`
 
