@@ -113,12 +113,8 @@ public class Verifier {
 			try {
 				response = verifyExcution.get(timeOut, timeUnit);
 
-			} catch (final InterruptedException interruptedExc) {
-				log.warn("{} {}", interruptedExc.getLocalizedMessage(),
-						interruptedExc);
-
-			} catch (final TimeoutException tiomeOutExc) {
-				throw new BrowserIDException(tiomeOutExc);
+			} catch (final InterruptedException | TimeoutException thExc) {
+				throw new BrowserIDException(thExc);
 
 			} catch (final ExecutionException execExc) {
 				throw new BrowserIDException(execExc.getCause());
