@@ -52,8 +52,8 @@ The pipeline consist of:
  1. MVN_DEPLOY_LIB The library is deployed to the [Sonatype Maven's repository](https://oss.sonatype.org/content/repositories/snapshots/info/modprobe/browserid-verifier).
 
 ## Code style
-Java code is formatted with the help of [Eclipse built-in formatter](../Eclipse_built-in-codestyle.xml) .
-Ruby code follows  [GitHub Styleguide](https://github.com/styleguide/ruby)
+Java code is formatted with the help of [Eclipse built-in formatter](../Eclipse_built-in-codestyle.xml).
+Ruby code follows  [GitHub Styleguide](https://github.com/styleguide/ruby).
 
 
 
