@@ -53,7 +53,7 @@ The pipeline consist of:
 
 ## Code style
 Java code is formatted with the help of [Eclipse built-in formatter](../Eclipse_built-in-codestyle.xml).
-Ruby code follows  [GitHub Styleguide](https://github.com/styleguide/ruby).
+Ruby code follows  [GitHub Styleguide](https://github.com/styleguide/ruby)...
 
 
 
