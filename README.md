@@ -20,7 +20,7 @@ Find a simple, yet complete [live sample here](https://browseridverifiersample-u
    <dependency>
       <groupId>info.modprobe</groupId>
       <artifactId>browserid-verifier</artifactId>
-      <version>0.2</version>
+      <version>0.8.9</version>
     </dependency>
 ```
 
