@@ -115,6 +115,11 @@ public class Verifier {
 
 			} catch (final InterruptedException | TimeoutException thExc) {
 				throw new BrowserIDException(thExc);
+				/*
+				 * Since the verifierExecutor thread isn't visible outside this
+				 * method is NOT necessary to call `Thread.interrupt()` here nor
+				 * elsewhere.
+				 */
 
 			} catch (final ExecutionException execExc) {
 				throw new BrowserIDException(execExc.getCause());
@@ -159,6 +164,13 @@ public class Verifier {
 		public String call() throws IOException {
 			/* Write to the connection */
 			try (final DataOutputStream wr = new DataOutputStream(
+			/*
+			 * From URLConnection docs:Invoking the close() methods on the
+			 * InputStream or OutputStream of an URLConnection after a request
+			 * may free network resources associated with this instance, unless
+			 * particular protocol specifications specify different behaviours
+			 * for it.
+			 */
 					connection.getOutputStream())) {
 				wr.writeBytes(jsonRequest.toString());
 				wr.flush();
