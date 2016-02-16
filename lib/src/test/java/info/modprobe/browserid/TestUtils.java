@@ -1,6 +1,6 @@
 package info.modprobe.browserid;
 
-public final class TestUtils {
+public interface TestUtils {
 
 	public static final String AUDIENCE = "https://example.com";
 	public static final String EMAIL = "bob@mail.com";
@@ -28,9 +28,5 @@ public final class TestUtils {
 			.format("{\"audience\":\"%s\",\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}",
 					AUDIENCE);
 	public static final String RESPONSE_WRONG_AUDIENCE_TYPE = "{\"audience\":true,\"expires\":1223334444150,\"issuer\":\"login.persona.org\", \"email\":\"bob@mail.com\",\"status\":\"okay\"}";
-
-	
-	private TestUtils() {
-	}
 
 }
