@@ -6,6 +6,7 @@ Questions and feedback is more than welcome!
 * JDK 7
 * Maven 3
 * Ruby 2.1.2
+ * rack 1.6.4
  * rspec 3.1.0
  * capybara 2.4.4
  * selenium-webdriver 2.47.1
