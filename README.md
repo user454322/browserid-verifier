@@ -1,4 +1,7 @@
-# BrowserID Verifier   [![Build Status](https://snap-ci.com/user454322/browserid-verifier/branch/master/build_image)](https://snap-ci.com/user454322/browserid-verifier/branch/master)
+# BrowserID Verifier   
+[![Build Status](https://snap-ci.com/user454322/browserid-verifier/branch/master/build_image)](https://snap-ci.com/user454322/browserid-verifier/branch/master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/info.modprobe/browserid-verifier/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/info.modprobe/browserid-verifier)
+
 
 This is a verification library for [Mozilla Persona](https://login.persona.org/about) written in Java. It allows to easily authenticate web application's users by veryfing BrowserID assertions.
 
