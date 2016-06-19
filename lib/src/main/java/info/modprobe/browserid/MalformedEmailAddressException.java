@@ -15,19 +15,19 @@ public class MalformedEmailAddressException extends Exception {
 	private static final long serialVersionUID = -8609916441584877393L;
 
 
-	public MalformedEmailAddressException(){
+	public MalformedEmailAddressException() {
 		super();
 	}
 
-	public MalformedEmailAddressException(final String msg){
+	public MalformedEmailAddressException(final String msg) {
 		super(msg);
 	}
 
-	public MalformedEmailAddressException(final Throwable throwable){
+	public MalformedEmailAddressException(final Throwable throwable) {
 		super(throwable);
 	}
 
-	public MalformedEmailAddressException(final String msg, final Throwable throwable){
+	public MalformedEmailAddressException(final String msg, final Throwable throwable) {
 		super(msg,throwable);
 	}
 

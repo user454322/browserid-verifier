@@ -32,7 +32,7 @@ Find a simple, yet complete [live sample here](https://browseridverifiersample-u
 
 
 ### 2. Use it
-In the server side:
+On the server side:
 ```java
 final Verifier verifier = new Verifier();
 final BrowserIDResponse personaResponse = verifier.verify(assertion, audience);
@@ -58,9 +58,9 @@ if (status == Status.OK) {
 [Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/java/info/modprobe/browserid/sample/servlet/In.java#L42-64)
 
 
-　　 
 
-In the client side:
+
+On the client side:
 ```javascript
 <button type="button" onclick="navigator.id.request();" >Sign in - Sign up</button>
 <button type="button" onclick="navigator.id.logout();" >Sign out</button>
