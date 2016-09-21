@@ -2,6 +2,7 @@
 [![Build Status](https://snap-ci.com/user454322/browserid-verifier/branch/master/build_image)](https://snap-ci.com/user454322/browserid-verifier/branch/master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/info.modprobe/browserid-verifier/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/info.modprobe/browserid-verifier)
 
+Java library for the BrowserID protocol.
 
 This is a verification library for [Mozilla Persona](https://login.persona.org/about) written in Java. It allows to easily authenticate web application's users by veryfing BrowserID assertions.
 
@@ -9,7 +10,7 @@ This is a verification library for [Mozilla Persona](https://login.persona.org/a
 The only external dependencies are SLF4J and json.org<sup>1</sup>. 
 
 
-To use it, just write something like:
+To use it just write something like:
 ```java
 BrowserIDResponse loginRepsonse = verifier.verify(assertion, AUDIENCE);
 ```
@@ -55,15 +56,15 @@ if (status == Status.OK) {
 	log.info("Sign in failed: {}", personaResponse.getReason());
 }
 ```
-[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/java/info/modprobe/browserid/sample/servlet/In.java#L42-64)
+[Complete example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/java/info/modprobe/browserid/sample/servlet/In.java#L41-L64)
 
 
 
 
 On the client side:
 ```javascript
-<button type="button" onclick="navigator.id.request();" >Sign in - Sign up</button>
-<button type="button" onclick="navigator.id.logout();" >Sign out</button>
+<button type="button" onclick="navigator.id.request();">Sign in - Sign up</button>
+<button type="button" onclick="navigator.id.logout();">Sign out</button>
 ....
 	<script src="https://login.persona.org/include.js"></script>
 
@@ -110,7 +111,7 @@ On the client side:
 	</script>
 
 ```
-[Example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/webapp/index.jsp#L42-83)
+[Complete example](https://github.com/user454322/browserid-verifier/blob/master/sample/app/src/main/webapp/index.jsp#L41-L83)
 
 <br />
 
