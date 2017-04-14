@@ -1,3 +1,7 @@
+# Important:
+Thank you for your interest.
+Mozilla has [shut down Persona.org](https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Persona) and **this project is not longer mainteined**. Look into OAuth 2.0 or other alternatives.
+
 # BrowserID Verifier   
 [![Build Status](https://snap-ci.com/user454322/browserid-verifier/branch/master/build_image)](https://snap-ci.com/user454322/browserid-verifier/branch/master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/info.modprobe/browserid-verifier/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/info.modprobe/browserid-verifier)
